@@ -6,6 +6,7 @@ import { GroupDetailsPage } from "@/features/groups/pages";
 import { JournalPage } from "@/features/journal/pages";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicOnlyRoute from "./PublicOnlyRoute";
+import VerifyEmail from "@/features/auth/pages/VerifyPage";
 
 export function AppRouter() {
   return (
@@ -25,6 +26,14 @@ export function AppRouter() {
           element={
             <PublicOnlyRoute>
               <SignupPage />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/verify-email"
+          element={
+            <PublicOnlyRoute>
+              <VerifyEmail />
             </PublicOnlyRoute>
           }
         />

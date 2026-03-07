@@ -31,9 +31,16 @@ export const authRepository = {
     return extracted;
   },
 
-  async signup(payload: SignupPayload): Promise<AuthResponse> {
+  async signup(payload: SignupPayload): Promise<{ message: string }> {
     const response = await httpClient.post("/api/user/signup-local", payload);
-    const extracted = response.data.data as AuthResponse;
-    return extracted;
+    return response.data;
+  },
+
+  async verifyEmail(token: string): Promise<AuthResponse> {
+    const response = await httpClient.get(
+      `/api/user/verify-email?token=${token}`,
+    );
+
+    return response.data.data as AuthResponse;
   },
 };

@@ -12,7 +12,7 @@ import {
 import { RiArrowRightLine } from "react-icons/ri";
 import { useState } from "react";
 import { useSignup } from "@/features/auth/hooks";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useToast } from "@/shared/toastService";
 
 function Signup() {
@@ -24,9 +24,9 @@ function Signup() {
     mobileNumber: "",
     upiId: "",
   });
+  const [emailSent, setEmailSent] = useState(false);
 
   const { mutate, isPending } = useSignup();
-  const navigate = useNavigate();
   const toast = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,8 +38,11 @@ function Signup() {
     e.preventDefault();
     mutate(formData as any, {
       onSuccess: () => {
-        toast.success("Signup Successful", "Account created successfully!");
-        navigate("/dashboard");
+        setEmailSent(true);
+        toast.success(
+          "Verification Email Sent",
+          "Please check your email to verify your account.",
+        );
       },
       onError: (error: any) => {
         const errorMessage =
@@ -48,6 +51,54 @@ function Signup() {
       },
     });
   };
+
+  if (emailSent) {
+    return (
+      <Box
+        minH="100vh"
+        bg="bg.primary"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        px={4}>
+        <VStack
+          maxW="420px"
+          width="100%"
+          bg="bg.secondary"
+          p={8}
+          borderRadius="xl"
+          border="1px solid"
+          borderColor="slate.700"
+          textAlign="center"
+          gap={4}>
+          <Heading
+            size="lg"
+            color="text.primary">
+            Check Your Email 📩
+          </Heading>
+
+          <Text color="text.muted">We sent a verification link to:</Text>
+
+          <Text
+            fontWeight="bold"
+            color="teal.400">
+            {formData.email}
+          </Text>
+
+          <Text color="text.muted">
+            Click the link in your email to activate your account.
+          </Text>
+
+          <Button
+            mt={4}
+            onClick={() => (window.location.href = "https://mail.google.com")}
+            colorScheme="teal">
+            Open Gmail
+          </Button>
+        </VStack>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -120,6 +171,7 @@ function Signup() {
         </VStack>
 
         {/* Form Section */}
+
         <Box
           as="form"
           onSubmit={handleSubmit}

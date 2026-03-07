@@ -28,8 +28,9 @@ function LoginPage() {
     mutate(
       { email, password },
       {
-        onSuccess: () => {
-          toast.success("Login Successful", "Welcome back!");
+        onSuccess: (data) => {
+          const firstName = data.user?.firstName || "User";
+          toast.success("Login Successful", `Welcome back, ${firstName}!`);
           navigate("/dashboard");
         },
         onError: (error: any) => {
