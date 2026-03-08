@@ -33,6 +33,7 @@ export const authRepository = {
 
   async signup(payload: SignupPayload): Promise<{ message: string }> {
     const response = await httpClient.post("/api/user/signup-local", payload);
+
     return response.data;
   },
 

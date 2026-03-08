@@ -28,5 +28,6 @@ export function useVerifyEmail() {
     onSuccess: (data) => {
       setAuth(data.user, data.accessToken);
     },
+    onError: () => {},
   });
 }

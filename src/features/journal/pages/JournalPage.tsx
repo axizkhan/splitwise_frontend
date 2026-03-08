@@ -15,11 +15,13 @@ import {
 import { MdNotificationsActive } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { useUserToUserJournalEntries } from "@/features/journal/hooks";
+import { useNotifyMember } from "@/features/journal/hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/core/state/auth";
 import { useState } from "react";
 import { JournalEntryCard } from "@/features/journal/components";
 import { PaymentDialog } from "@/features/payments/components";
+import { useToast } from "@/shared/toastService";
 import { IoArrowBack } from "react-icons/io5";
 
 function Journel() {
@@ -30,12 +32,14 @@ function Journel() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [pageNumber, setPageNumber] = useState(1);
+  const toast = useToast();
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const { data: journalData, isLoading } = useUserToUserJournalEntries(
     groupId || "",
     memberId || "",
     pageNumber,
   );
+  const { mutate: notifyMember, isPending } = useNotifyMember();
 
   const userName = user?.firstName || "User";
 
@@ -61,6 +65,26 @@ function Journel() {
       );
     }, 0) || 0;
 
+  const onReminderAlert = () => {
+    if (groupId && memberId) {
+      notifyMember(
+        {
+          groupId,
+          memberId,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Reminder send successfull via email");
+          },
+          onError: (error: any) => {
+            const errorMessage = error?.message || "Notification failed";
+            toast.error("Notification Failed", errorMessage);
+            console.log(error);
+          },
+        },
+      );
+    }
+  };
   return (
     <Box
       px={{ base: 4, md: 6, lg: 8 }}
@@ -293,10 +317,12 @@ function Journel() {
             colorScheme="green"
             borderColor="green.500"
             color="green.400"
+            loading={isPending}
             _hover={{
               bg: "rgba(34, 197, 94, 0.1)",
               borderColor: "green.400",
-            }}>
+            }}
+            onClick={onReminderAlert}>
             <MdNotificationsActive />
             Notify Member
           </Button>

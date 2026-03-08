@@ -9,7 +9,7 @@ export interface NormalizeError {
 
 /**create axios instance */
 const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -25,7 +25,9 @@ httpClient.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error),
+  (error) => {
+    Promise.reject(error);
+  },
 );
 
 /**Response interceptor */

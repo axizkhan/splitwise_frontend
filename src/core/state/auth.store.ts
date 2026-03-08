@@ -21,11 +21,11 @@ export const useAuthStore = create<AuthState>((set) => {
       parsedUser = JSON.parse(storedUser);
     }
   } catch (error) {
-    // Clear corrupted data
+  
     try {
       localStorage.removeItem("authUser");
     } catch (e) {
-      // Ignore error
+    
     }
   }
 

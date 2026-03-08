@@ -27,16 +27,8 @@ export function useCreatePayment() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS, variables.groupId],
       });
-      toast.success(
-        "Payment Successful",
-        `₹${variables.amount} payment has been recorded successfully!`,
-      );
+      
     },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Failed to process payment. Please try again.";
-      toast.error("Payment Failed", errorMessage);
-    },
+    
   });
 }

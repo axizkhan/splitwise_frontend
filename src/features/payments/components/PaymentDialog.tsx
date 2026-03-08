@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@chakra-ui/react";
 import { useCreatePayment } from "@/features/groups/hooks-payment";
+import { useToast } from "@/shared/toastService";
 import { useState } from "react";
 
 interface PaymentDialogProps {
@@ -33,6 +34,8 @@ function PaymentDialog({
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen =
     controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+
+  const toast = useToast();
 
   const setIsOpen = (value: boolean) => {
     if (controlledIsOpen !== undefined && onOpenChange) {
@@ -57,6 +60,12 @@ function PaymentDialog({
           onSuccess: () => {
             setAmount("");
             setIsOpen(false);
+            toast.success("Payment Successfull", "Your payment is successfull");
+          },
+          onError: (error) => {
+            const errorMessage =
+              error?.message || "Failed to process payment. Please try again.";
+            toast.error("Payment Failed", errorMessage);
           },
         },
       );

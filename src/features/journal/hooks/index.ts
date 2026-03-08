@@ -4,3 +4,5 @@ export {
   useGroupJournalEntries,
   useUserToUserJournalEntries,
 } from "../../groups/hooks-journal";
+
+export { useNotifyMember } from "../../groups/hooks-reminder";

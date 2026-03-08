@@ -46,7 +46,7 @@ function Signup() {
       },
       onError: (error: any) => {
         const errorMessage =
-          error?.response?.data?.message || "Signup failed. Please try again.";
+          error?.message || "Signup failed. Please try again.";
         toast.error("Signup Failed", errorMessage);
       },
     });

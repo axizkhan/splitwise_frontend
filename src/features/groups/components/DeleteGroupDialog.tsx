@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteGroup } from "@/features/groups/hooks";
 import { useAuthStore } from "@/core/state/auth.store";
+import { useToast } from "@/shared/toastService";
 
 export default function DeleteGroupDialog({
   groupId,
@@ -28,6 +29,7 @@ export default function DeleteGroupDialog({
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuthStore();
   const { mutate: deleteGroup, isPending } = useDeleteGroup();
+  const toast = useToast();
 
   // Wait for user to load from auth store
   if (!user) return null;
@@ -40,7 +42,14 @@ export default function DeleteGroupDialog({
     deleteGroup(groupId, {
       onSuccess: () => {
         setIsOpen(false);
+        toast.success("Group Deleted", "Group deleted successfully");
         navigate("/dashboard");
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message ||
+          "Failed to delete group. Please try again.";
+        toast.error("Deletion Failed", errorMessage);
       },
     });
   };
