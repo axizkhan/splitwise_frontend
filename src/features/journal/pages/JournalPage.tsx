@@ -49,8 +49,6 @@ function Journel() {
 
   const { mutate: notifyMember, isPending } = useNotifyMember();
 
-  const userName = user?.firstName || "User";
-
   const otherMember = journalData?.entries?.[0]?.users?.find(
     (u: any) => u._id !== user?.id,
   );

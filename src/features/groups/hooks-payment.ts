@@ -5,7 +5,6 @@ import { useToast } from "@/shared/toastService";
 
 export function useCreatePayment() {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: paymentRepository.createPayment,
@@ -27,8 +26,6 @@ export function useCreatePayment() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS, variables.groupId],
       });
-      
     },
-    
   });
 }

@@ -22,18 +22,6 @@ const AppHeader: React.FC = () => {
   const drawerWidth =
     typeof window !== "undefined" && window.innerWidth < 768 ? "50vw" : "360px";
 
-  const menuItemStyle: React.CSSProperties = {
-    background: "transparent",
-    border: "none",
-    color: "#e2e8f0",
-    textAlign: "left",
-    padding: "0.8rem 0",
-    fontSize: 16,
-    fontWeight: 500,
-    cursor: "pointer",
-    transition: "color 0.2s ease",
-  };
-
   return (
     <>
       {/* HEADER */}

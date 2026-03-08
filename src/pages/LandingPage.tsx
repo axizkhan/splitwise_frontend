@@ -207,7 +207,7 @@ const LandingPage: React.FC = () => {
                   desc: "See who owes what and settle instantly.",
                   icon: FaBalanceScale,
                 },
-              ].map((step, i) => (
+              ].map((step) => (
                 <Box
                   key={step.title}
                   p="10"
