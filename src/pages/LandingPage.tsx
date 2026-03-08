@@ -11,6 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaUsers, FaReceipt } from "react-icons/fa";
+import FinanceBackground from "../components/animation/FinanceBackground";
 import {
   FaUserFriends,
   FaMoneyBillWave,
@@ -56,10 +57,11 @@ const LandingPage: React.FC = () => {
     <AppPageLayout>
       <Box
         minH="100vh"
-        display={"flex"}
-        flexDir={"column"}
-        alignItems={"center"}>
-        {/* HERO */}
+        display="flex"
+        flexDir="column"
+        alignItems="center"
+        position="relative">
+        <FinanceBackground />
         <Container
           maxW="6xl"
           py="32">
