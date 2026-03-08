@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { paymentRepository } from "@/infrastructure/api/payment.repository";
 import { QUERY_KEYS } from "@/shared/queryKeys";
-import { useToast } from "@/shared/toastService";
 
 export function useCreatePayment() {
   const queryClient = useQueryClient();

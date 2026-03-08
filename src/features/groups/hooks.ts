@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { groupRepository } from "@/infrastructure/api/group.repository";
 import { QUERY_KEYS } from "@/shared/queryKeys";
-import { useToast } from "@/shared/toastService";
 
 export function useGroups() {
   return useQuery({
@@ -31,7 +30,6 @@ export function useCreateGroup() {
 
 export function useAddMember() {
   const queryClient = useQueryClient();
-  
 
   return useMutation({
     mutationFn: ({
@@ -55,14 +53,11 @@ export function useAddMember() {
 
 export function useDeleteGroup() {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: (groupId: string) => groupRepository.deleteGroup(groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GROUPS] });
-      
     },
-    
   });
 }
