@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import AppHeader from "../components/layout/AppHeader";
 import { LoginPage } from "@/features/auth/pages";
 import { SignupPage } from "@/features/auth/pages";
 import { GroupListPage } from "@/features/groups/pages";
@@ -7,10 +8,12 @@ import { JournalPage } from "@/features/journal/pages";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicOnlyRoute from "./PublicOnlyRoute";
 import VerifyEmail from "@/features/auth/pages/VerifyPage";
-
+import LandingPage from "../pages/LandingPage";
+import Footer from "@/components/layout/Footer";
 export function AppRouter() {
   return (
     <BrowserRouter>
+      <AppHeader />
       <Routes>
         {/* Public Routes */}
         <Route
@@ -66,14 +69,13 @@ export function AppRouter() {
           }
         />
 
-        {/* Redirect root to dashboard or login */}
+        {/* Public Landing Page */}
         <Route
           path="/"
           element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
+            <PublicOnlyRoute>
+              <LandingPage />
+            </PublicOnlyRoute>
           }
         />
 
@@ -88,6 +90,7 @@ export function AppRouter() {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

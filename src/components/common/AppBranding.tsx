@@ -8,7 +8,6 @@ export default function AppBranding() {
       justify="flex-start"
       align="center"
       gap={2}
-      mb={8}
       cursor="pointer"
       onClick={() => navigate("/dashboard")}
       transition="all 0.2s"

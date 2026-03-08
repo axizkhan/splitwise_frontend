@@ -12,10 +12,7 @@ export interface JournalEntry {
 
 export interface JournalDataEntry {
   _id: string;
-  user: {
-    firstName: string;
-    lastName: string;
-  };
+  users: any;
   entryArray: Array<{
     lenderId: string;
     type: string;
