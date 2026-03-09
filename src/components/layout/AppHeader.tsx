@@ -133,6 +133,7 @@ const AppHeader: React.FC = () => {
                   justifyContent: "center",
                   fontWeight: 700,
                   fontSize: 20,
+                  flexShrink: 0,
                 }}>
                 {user.firstName?.[0]}
               </div>
