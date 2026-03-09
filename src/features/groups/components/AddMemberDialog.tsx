@@ -35,8 +35,11 @@ function AddMemberDialog({ groupId }: AddMemberDialogProps) {
         payload: { newMemberEmail: email },
       },
       {
-        onSuccess: () => {
-          toast.success("Member Added", `${email} has been added to the group`);
+        onSuccess: (data) => {
+          toast.success(
+            "Invitation Sent",
+            data?.message || `Invitation sent to ${email}`,
+          );
           setEmail("");
           setIsOpen(false);
         },

@@ -7,7 +7,7 @@ export function useCreatePayment() {
 
   return useMutation({
     mutationFn: paymentRepository.createPayment,
-    onSuccess: (_, variables) => {
+    onSuccess: (data, variables) => {
       // Invalidate all related queries to ensure fresh data
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS, variables.groupId],
@@ -25,6 +25,8 @@ export function useCreatePayment() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS, variables.groupId],
       });
+
+      return data;
     },
   });
 }

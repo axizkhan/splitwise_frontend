@@ -44,11 +44,9 @@ export const groupRepository = {
     return response.data.data;
   },
 
-  async addMember(
-    groupId: string,
-    payload: { newMemberEmail: string },
-  ): Promise<void> {
-    await httpClient.put(`/api/auth/group/${groupId}`, payload);
+  async addMember(groupId: string, payload: { newMemberEmail: string }) {
+    const res = await httpClient.put(`/api/auth/group/${groupId}`, payload);
+    return res.data;
   },
 
   async deleteGroup(groupId: string): Promise<void> {

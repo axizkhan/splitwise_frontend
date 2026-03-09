@@ -8,8 +8,11 @@ import {
   VStack,
   HStack,
   Image,
+  InputGroup,
+  IconButton,
 } from "@chakra-ui/react";
-import { RiArrowRightLine } from "react-icons/ri";
+
+import { RiArrowRightLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useLogin } from "../hooks";
 import { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
@@ -20,11 +23,13 @@ function LoginPage() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     mutate(
       { email, password },
       {
@@ -51,19 +56,17 @@ function LoginPage() {
       justifyContent="center"
       py={8}
       px={4}>
-      {/* Main Container */}
       <VStack
         width="100%"
         maxW="420px"
         gap={8}>
-        {/* Header Section */}
+        {/* Header */}
         <VStack
           gap={6}
           width="100%">
-          {/* Logo and App Name */}
           <VStack gap={3}>
             <Box
-              bg="linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)"
+              bg="linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.1))"
               p={4}
               borderRadius="2xl"
               border="1px solid"
@@ -76,43 +79,41 @@ function LoginPage() {
                 objectFit="contain"
               />
             </Box>
+
             <VStack gap={1}>
               <Heading
                 size="2xl"
                 color="text.primary"
-                fontWeight="800"
-                textAlign="center">
+                fontWeight="800">
                 Splitly
               </Heading>
+
               <Text
                 color="text.secondary"
-                fontSize="sm"
-                textAlign="center">
+                fontSize="sm">
                 Track shared expenses with ease
               </Text>
             </VStack>
           </VStack>
 
-          {/* Login Heading */}
           <VStack
             gap={2}
             width="100%">
             <Heading
               size="lg"
-              color="text.primary"
-              textAlign="center">
+              color="text.primary">
               Welcome Back
             </Heading>
+
             <Text
               color="text.muted"
-              fontSize="sm"
-              textAlign="center">
+              fontSize="sm">
               Login to continue managing your groups
             </Text>
           </VStack>
         </VStack>
 
-        {/* Form Section */}
+        {/* Form */}
         <Box
           as="form"
           onSubmit={handleSubmit}
@@ -120,15 +121,10 @@ function LoginPage() {
           display="flex"
           flexDirection="column"
           gap={5}>
-          {/* Email Field */}
+          {/* Email */}
           <Field.Root required>
-            <Field.Label
-              color="text.primary"
-              fontSize="sm"
-              fontWeight="600"
-              mb={2}>
-              Email Address
-            </Field.Label>
+            <Field.Label fontWeight="600">Email Address</Field.Label>
+
             <Input
               placeholder="you@example.com"
               type="email"
@@ -136,59 +132,47 @@ function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               bg="bg.secondary"
               borderColor="slate.700"
-              color="text.primary"
-              _placeholder={{ color: "text.muted" }}
               px={2}
-              _focus={{
-                borderColor: "teal.500",
-                boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-              }}
-              _hover={{
-                borderColor: "slate.600",
-              }}
               height="44px"
               fontSize="sm"
             />
-            <Field.HelperText
-              color="text.muted"
-              fontSize="xs"
-              mt={1}>
+
+            <Field.HelperText fontSize="xs">
               We'll never share your email.
             </Field.HelperText>
           </Field.Root>
 
-          {/* Password Field */}
+          {/* Password */}
           <Field.Root required>
-            <Field.Label
-              color="text.primary"
-              fontSize="sm"
-              fontWeight="600"
-              mb={2}>
-              Password
-            </Field.Label>
-            <Input
-              placeholder="Enter your password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              bg="bg.secondary"
-              borderColor="slate.700"
-              px={2}
-              color="text.primary"
-              _placeholder={{ color: "text.muted" }}
-              _focus={{
-                borderColor: "teal.500",
-                boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-              }}
-              _hover={{
-                borderColor: "slate.600",
-              }}
-              height="44px"
-              fontSize="sm"
-            />
+            <Field.Label fontWeight="600">Password</Field.Label>
+
+            <InputGroup
+              endElement={
+                <IconButton
+                  size="sm"
+                  variant="ghost"
+                  aria-label="toggle password"
+                  color="gray.400"
+                  _hover={{ color: "gray.200", bg: "transparent" }}
+                  onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+                </IconButton>
+              }>
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                bg="bg.secondary"
+                borderColor="slate.700"
+                px={2}
+                height="44px"
+                fontSize="sm"
+              />
+            </InputGroup>
           </Field.Root>
 
-          {/* Login Button */}
+          {/* Login button */}
           <Button
             type="submit"
             width="100%"
@@ -198,20 +182,13 @@ function LoginPage() {
             fontSize="sm"
             fontWeight="600"
             disabled={isPending}
-            _hover={{
-              bg: "teal.600",
-            }}
-            _active={{
-              bg: "teal.700",
-            }}
-            transition="all 0.2s"
             gap={2}>
             {isPending ? "Logging in..." : "Log In"}
             <RiArrowRightLine />
           </Button>
         </Box>
 
-        {/* Footer Section */}
+        {/* Footer */}
         <VStack
           gap={4}
           width="100%">
@@ -220,23 +197,16 @@ function LoginPage() {
             height="1px"
             bg="linear-gradient(90deg, transparent, slate.700, transparent)"
           />
-          <HStack
-            gap={1}
-            justify="center"
-            flexWrap="wrap"
-            width="100%">
-            <Text
-              color="text.muted"
-              fontSize="sm">
-              Don't have an account?
-            </Text>
+
+          <HStack gap={1}>
+            <Text fontSize="sm">Don't have an account?</Text>
+
             <RouterLink to="/signup">
               <Text
                 as="span"
                 color="teal.400"
                 fontWeight="600"
-                cursor="pointer"
-                _hover={{ color: "teal.300", textDecoration: "underline" }}>
+                _hover={{ textDecoration: "underline" }}>
                 Sign up
               </Text>
             </RouterLink>

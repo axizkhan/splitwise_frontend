@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { expenseRepository } from "@/infrastructure/api/expense.repository";
 import type { ExpensePayload } from "@/infrastructure/api/expense.repository";
 import { QUERY_KEYS } from "@/shared/queryKeys";
-import { useToast } from "@/shared/toastService";
 
 export function useGroupExpenses(groupId: string) {
   return useQuery({
@@ -22,7 +21,6 @@ export function useUserExpenses(groupId: string) {
 
 export function useCreateExpense() {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: ({
@@ -50,23 +48,12 @@ export function useCreateExpense() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS, variables.groupId],
       });
-      toast.success(
-        "Expense Created",
-        `"${variables.payload.title}" has been added successfully!`,
-      );
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Failed to create expense. Please try again.";
-      toast.error("Creation Failed", errorMessage);
     },
   });
 }
 
 export function useEditExpense() {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: ({
@@ -94,23 +81,12 @@ export function useEditExpense() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS],
       });
-      toast.success(
-        "Expense Updated",
-        "The expense has been updated successfully!",
-      );
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Failed to update expense. Please try again.";
-      toast.error("Update Failed", errorMessage);
     },
   });
 }
 
 export function useDeleteExpense() {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: expenseRepository.deleteExpense,
@@ -132,16 +108,6 @@ export function useDeleteExpense() {
       queryClient.refetchQueries({
         queryKey: [QUERY_KEYS.GROUP_DETAILS],
       });
-      toast.success(
-        "Expense Deleted",
-        "The expense has been removed successfully!",
-      );
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Failed to delete expense. Please try again.";
-      toast.error("Deletion Failed", errorMessage);
     },
   });
 }

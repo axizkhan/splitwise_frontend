@@ -14,6 +14,8 @@ import { useState } from "react";
 import { useSignup } from "@/features/auth/hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { useToast } from "@/shared/toastService";
+import { InputGroup, IconButton } from "@chakra-ui/react";
+import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -25,6 +27,7 @@ function Signup() {
     upiId: "",
   });
   const [emailSent, setEmailSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate, isPending } = useSignup();
   const toast = useToast();
@@ -297,27 +300,40 @@ function Signup() {
               mb={2}>
               Password
             </Field.Label>
-            <Input
-              name="password"
-              type="password"
-              px={2}
-              placeholder="Create a strong password"
-              value={formData.password}
-              onChange={handleChange}
-              bg="bg.secondary"
-              borderColor="slate.700"
-              color="text.primary"
-              _placeholder={{ color: "text.muted" }}
-              _focus={{
-                borderColor: "teal.500",
-                boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-              }}
-              _hover={{
-                borderColor: "slate.600",
-              }}
-              height="44px"
-              fontSize="sm"
-            />
+            <InputGroup
+              endElement={
+                <IconButton
+                  size="sm"
+                  variant="ghost"
+                  aria-label="toggle password"
+                  color="gray.400"
+                  _hover={{ color: "gray.200", bg: "transparent" }}
+                  onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
+                </IconButton>
+              }>
+              <Input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                px={2}
+                placeholder="Create a strong password"
+                value={formData.password}
+                onChange={handleChange}
+                bg="bg.secondary"
+                borderColor="slate.700"
+                color="text.primary"
+                _placeholder={{ color: "text.muted" }}
+                _focus={{
+                  borderColor: "teal.500",
+                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
+                }}
+                _hover={{
+                  borderColor: "slate.600",
+                }}
+                height="44px"
+                fontSize="sm"
+              />
+            </InputGroup>
           </Field.Root>
 
           {/* Optional Fields */}

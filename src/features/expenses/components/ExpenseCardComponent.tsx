@@ -89,6 +89,7 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
         boxShadow: "0 8px 20px rgba(34, 197, 94, 0.2)",
         transform: "translateY(-6px)",
         borderColor: "green.500",
+        zIndex: 2,
       }}
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
       cursor="pointer">
