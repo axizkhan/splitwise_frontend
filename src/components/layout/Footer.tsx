@@ -38,14 +38,6 @@ const Footer = () => {
               align="center"
               gap="3">
               <AppBranding />
-
-              <Text
-                fontWeight="bold"
-                fontSize="lg"
-                letterSpacing="wide"
-                color="white">
-                Splitly
-              </Text>
             </Flex>
 
             <Text
