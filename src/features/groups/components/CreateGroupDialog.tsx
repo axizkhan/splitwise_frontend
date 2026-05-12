@@ -68,12 +68,19 @@ function CreateGroupDialog() {
       {/* Trigger Button */}
       <Dialog.Trigger asChild>
         <Button
-          bg="teal.500"
-          _hover={{ bg: "teal.400" }}
-          _active={{ bg: "teal.600" }}
-          boxShadow="0 8px 20px rgba(20,184,166,0.3)"
+          bg="accent.primary"
+          color="white"
           px={{ mdDown: 2, md: 3 }}
-          size="sm">
+          size="sm"
+          transition="all 0.2s"
+          boxShadow="0 8px 20px rgba(59,130,246,0.25)"
+          _hover={{
+            opacity: 0.92,
+            transform: "translateY(-1px)",
+          }}
+          _active={{
+            transform: "scale(0.98)",
+          }}>
           {isSmallScreen ? (
             "+"
           ) : (
@@ -99,19 +106,19 @@ function CreateGroupDialog() {
           <Dialog.Content
             position="relative"
             p={{ base: 6, md: 8 }}
-            bg="linear-gradient(135deg, #0f172a, #1e293b)"
+            bg="bg.secondary"
             borderRadius="2xl"
             border="1px solid"
-            borderColor="whiteAlpha.200"
+            borderColor="border.default"
             boxShadow="0 20px 60px rgba(0,0,0,0.6)">
-            {/* Top Accent Bar */}
+            {/* Accent Bar */}
             <Box
               position="absolute"
               top="0"
               left="0"
               right="0"
               height="3px"
-              bg="teal.400"
+              bg="accent.primary"
               borderTopRadius="2xl"
             />
 
@@ -124,12 +131,13 @@ function CreateGroupDialog() {
                   fontSize="2xl"
                   fontWeight="bold"
                   letterSpacing="tight"
-                  color="white">
+                  color="text.primary">
                   Create New Group
                 </Dialog.Title>
+
                 <Text
                   fontSize="sm"
-                  color="whiteAlpha.700">
+                  color="text.muted">
                   Organise your shared expenses with friends and family
                 </Text>
               </VStack>
@@ -140,10 +148,11 @@ function CreateGroupDialog() {
               <VStack
                 gap={8}
                 align="stretch">
+                {/* Group Name */}
                 <Field.Root required>
                   <Field.Label
                     fontWeight="medium"
-                    color="whiteAlpha.800">
+                    color="text.secondary">
                     Group Name <Field.RequiredIndicator />
                   </Field.Label>
 
@@ -152,30 +161,37 @@ function CreateGroupDialog() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    bg="whiteAlpha.50"
+                    bg="bg.tertiary"
                     border="1px solid"
                     px={2}
-                    borderColor="whiteAlpha.200"
-                    _hover={{ borderColor: "whiteAlpha.300" }}
-                    _focus={{
-                      borderColor: "teal.400",
-                      boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
-                      bg: "whiteAlpha.100",
+                    borderColor="border.subtle"
+                    color="text.primary"
+                    _placeholder={{
+                      color: "text.muted",
+                    }}
+                    _hover={{
+                      borderColor: "border.default",
+                    }}
+                    _focusVisible={{
+                      borderColor: "accent.primary",
+                      boxShadow:
+                        "0 0 0 1px var(--chakra-colors-accent-primary)",
                     }}
                     transition="all 0.2s ease"
                   />
 
                   <Field.HelperText
                     fontSize="xs"
-                    color="whiteAlpha.600">
+                    color="text.muted">
                     Choose a name that describes your group.
                   </Field.HelperText>
                 </Field.Root>
 
+                {/* Description */}
                 <Field.Root>
                   <Field.Label
                     fontWeight="medium"
-                    color="whiteAlpha.800">
+                    color="text.secondary">
                     Description
                   </Field.Label>
 
@@ -188,14 +204,20 @@ function CreateGroupDialog() {
                     onChange={handleChange}
                     rows={3}
                     resize="none"
-                    bg="whiteAlpha.50"
+                    bg="bg.tertiary"
                     border="1px solid"
-                    borderColor="whiteAlpha.200"
-                    _hover={{ borderColor: "whiteAlpha.300" }}
-                    _focus={{
-                      borderColor: "teal.400",
-                      boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
-                      bg: "whiteAlpha.100",
+                    borderColor="border.subtle"
+                    color="text.primary"
+                    _placeholder={{
+                      color: "text.muted",
+                    }}
+                    _hover={{
+                      borderColor: "border.default",
+                    }}
+                    _focusVisible={{
+                      borderColor: "accent.primary",
+                      boxShadow:
+                        "0 0 0 1px var(--chakra-colors-accent-primary)",
                     }}
                     transition="all 0.2s ease"
                   />
@@ -212,22 +234,29 @@ function CreateGroupDialog() {
                 <Dialog.ActionTrigger asChild>
                   <Button
                     variant="ghost"
-                    color="whiteAlpha.700"
-                    _hover={{ bg: "whiteAlpha.100" }}
+                    color="text.secondary"
+                    _hover={{
+                      bg: "bg.tertiary",
+                      color: "text.primary",
+                    }}
                     onClick={() => setIsOpen(false)}>
                     Cancel
                   </Button>
                 </Dialog.ActionTrigger>
 
                 <Button
-                  bg="teal.500"
-                  _hover={{ bg: "teal.400" }}
-                  _active={{ bg: "teal.600" }}
-                  boxShadow="0 8px 20px rgba(20,184,166,0.3)"
+                  bg="accent.primary"
+                  color="white"
+                  boxShadow="0 8px 20px rgba(59,130,246,0.25)"
                   onClick={handleSubmit}
                   loading={isPending}
                   px={{ mdDown: 2, md: 3 }}
-                  loadingText="Creating...">
+                  loadingText="Creating..."
+                  transition="all 0.2s"
+                  _hover={{
+                    opacity: 0.92,
+                    transform: "translateY(-1px)",
+                  }}>
                   Create Group
                 </Button>
               </HStack>
@@ -237,8 +266,11 @@ function CreateGroupDialog() {
             <Dialog.CloseTrigger asChild>
               <CloseButton
                 size="sm"
-                color="whiteAlpha.700"
-                _hover={{ bg: "whiteAlpha.200" }}
+                color="text.muted"
+                _hover={{
+                  bg: "bg.tertiary",
+                  color: "text.primary",
+                }}
               />
             </Dialog.CloseTrigger>
           </Dialog.Content>

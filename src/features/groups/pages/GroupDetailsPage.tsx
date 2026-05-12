@@ -1,4 +1,11 @@
-import { Box, SimpleGrid, Skeleton, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -97,29 +104,49 @@ function GroupDetailsPage() {
     <AppPageLayout>
       <VStack
         align="stretch"
-        gap={8}>
-        {/* Header */}
-        <Box>
-          <GroupHeader groupName={groupDetails.group?.name || ""} />
+        gap={{ base: 6, md: 8 }}
+        w="full">
+        {/* Header Section */}
+        <Box
+          bg="bg.secondary"
+          border="1px solid"
+          borderColor="border.default"
+          rounded="2xl"
+          p={{ base: 5, md: 6 }}
+          boxShadow="0 4px 12px rgba(0,0,0,0.2)">
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            justify="space-between"
+            align={{ base: "start", md: "center" }}
+            gap={4}>
+            <GroupHeader groupName={groupDetails.group?.name || ""} />
 
-          <DeleteGroupDialog
-            groupId={groupId || ""}
-            groupName={groupDetails.group?.name || ""}
-            createdBy={groupDetails.group?.createdBy || ""}
-          />
+            <DeleteGroupDialog
+              groupId={groupId || ""}
+              groupName={groupDetails.group?.name || ""}
+              createdBy={groupDetails.group?.createdBy || ""}
+            />
+          </Stack>
         </Box>
 
         {/* Summary Cards */}
         <GroupSummaryCards summaryCards={summaryCards} />
 
         {/* Tabs */}
-        <GroupTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
+        <Box
+          borderBottom="1px solid"
+          borderColor="border.default"
+          pb={1}>
+          <GroupTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        </Box>
 
         {/* Content */}
-        <Box>
+        <Box
+          minH="200px"
+          transition="all 0.2s ease">
           {activeTab === "members" && (
             <MembersTabContent
               groupId={groupId || ""}

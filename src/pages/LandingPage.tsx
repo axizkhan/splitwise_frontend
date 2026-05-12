@@ -8,9 +8,8 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  Flex,
 } from "@chakra-ui/react";
-import { FaUsers, FaReceipt } from "react-icons/fa";
-import FinanceBackground from "../components/animation/FinanceBackground";
 import {
   FaUserFriends,
   FaMoneyBillWave,
@@ -20,7 +19,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../core/state/auth";
 import AppPageLayout from "../components/layout/PageLayout";
+import FinanceBackground from "@/components/animation/FinanceBackground";
 
+// Features data with modern iconography
 const features = [
   {
     icon: FaMoneyBillWave,
@@ -35,7 +36,7 @@ const features = [
   {
     icon: FaEnvelopeOpenText,
     title: "Email Notifications",
-    desc: "Automatically notify group members when expenses are added.",
+    desc: "Stay updated with automated group alerts.",
   },
   {
     icon: FaBalanceScale,
@@ -55,114 +56,128 @@ const LandingPage: React.FC = () => {
   return (
     <AppPageLayout>
       <Box
+        bg="bg.primary"
+        color="text.primary"
+        position="relative"
+        overflow="hidden"
         minH="100vh"
-        display="flex"
-        flexDir="column"
-        alignItems="center"
-        position="relative">
+        w="full">
+        {/* HERO SECTION */}
         <FinanceBackground />
         <Container
-          maxW="6xl"
-          py="32">
+          maxW="full"
+          pt={{ base: "32", md: "48" }}
+          pb="32"
+          centerContent>
           <Stack
             gap="8"
-            textAlign="center">
+            textAlign="center"
+            alignItems="center">
             <Heading
-              fontSize={{ base: "4xl", md: "6xl" }}
-              bgGradient="linear(to-r, teal.300, cyan.400)"
-              bgClip="text">
-              Split Expenses
-              <br />
-              Without the Headache
+              as="h1"
+              fontSize={{ base: "4xl", md: "7xl" }}
+              fontWeight="800"
+              letterSpacing="-0.04em"
+              lineHeight="1.1">
+              Split expenses. <br />
+              <Text
+                as="span"
+                color="text.muted">
+                Zero headache.
+              </Text>
             </Heading>
 
             <Text
-              color="gray.400"
-              maxW="2xl"
-              mx="auto"
-              fontSize="lg">
-              Splitly helps friends, roommates and teams track shared expenses
-              and settle balances instantly.
+              color="text.secondary"
+              maxW="xl"
+              fontSize="xl"
+              fontWeight="400">
+              The modern way for teams and roommates to track shared costs and
+              settle balances without the friction.
             </Text>
 
             <Stack
-              direction="row"
-              justify="center"
-              gap="4">
+              direction={{ base: "column", sm: "row" }}
+              gap="4"
+              pt="4">
               <Button
-                variant="outline"
-                borderColor="teal.500"
-                color="teal.400"
-                px="8"
+                bg="text.primary"
+                color="bg.primary"
+                rounded="full"
+                px="10"
                 size="lg"
+                transition="all 0.2s"
                 _hover={{
-                  bg: "rgba(20,184,166,0.1)",
-                  borderColor: "teal.400",
+                  opacity: 0.9,
+                  transform: "translateY(-2px)",
                 }}
                 onClick={() => navigate("/signup")}>
-                Get Started
+                Start for free
               </Button>
 
               <Button
                 variant="outline"
-                borderColor="blue.500"
-                color="blue.400"
-                px="8"
+                borderColor="border.subtle"
+                color="text.primary"
+                rounded="full"
+                px="10"
                 size="lg"
                 _hover={{
-                  bg: "rgba(59,130,246,0.1)",
-                  borderColor: "blue.400",
+                  bg: "bg.secondary",
+                  borderColor: "border.default",
                 }}
                 onClick={() => navigate("/login")}>
-                Login
+                Sign in
               </Button>
             </Stack>
           </Stack>
         </Container>
 
-        {/* FEATURES */}
+        {/* FEATURES GRID */}
         <Container
-          maxW="6xl"
-          py="20">
-          <Heading
-            textAlign="center"
-            mb="16"
-            color="white">
-            Powerful Features
-          </Heading>
-
+          maxW="container.xl"
+          py="24">
           <SimpleGrid
             columns={{ base: 1, md: 2, lg: 4 }}
-            gap="8">
+            gap="6"
+            justifyItems="center">
             {features.map((feature) => (
               <Box
                 key={feature.title}
                 p="8"
-                borderRadius="xl"
-                bg="rgba(15,23,42,0.6)"
+                bg="bg.secondary"
                 border="1px solid"
-                borderColor="whiteAlpha.200"
-                backdropFilter="blur(14px)"
-                transition="all .25s"
+                borderColor="border.default"
+                rounded="2xl"
+                w="full"
+                maxW="300px"
+                transition="all 0.3s"
                 _hover={{
-                  transform: "translateY(-6px)",
-                  borderColor: "teal.300",
+                  borderColor: "border.subtle",
+                  bg: "bg.tertiary",
+                  transform: "translateY(-4px)",
                 }}>
                 <Icon
                   as={feature.icon}
-                  boxSize="8"
-                  color="teal.300"
-                  mb="4"
+                  boxSize="6"
+                  color="accent.primary"
+                  mb="6"
                 />
 
                 <Text
-                  fontWeight="bold"
-                  color="white"
-                  mb="2">
+                  fontWeight="600"
+                  fontSize="lg"
+                  mb="2"
+                  color="text.primary">
                   {feature.title}
                 </Text>
 
-                <Text color="gray.400">{feature.desc}</Text>
+                <Text
+                  color="text.muted"
+                  fontSize="sm"
+                  lineHeight="tall">
+                  {feature.desc}
+                </Text>
               </Box>
             ))}
           </SimpleGrid>
@@ -170,185 +185,113 @@ const LandingPage: React.FC = () => {
 
         {/* HOW IT WORKS */}
         <Container
-          maxW="6xl"
+          maxW="5xl"
           py="24">
-          <Stack gap="16">
-            <Stack
-              gap="4"
-              textAlign="center">
-              <Heading color="white">How It Works</Heading>
+          <Heading
+            textAlign="center"
+            fontSize="3xl"
+            mb="16"
+            color="text.primary">
+            How it works
+          </Heading>
 
-              <Text
-                color="gray.400"
-                maxW="2xl"
-                mx="auto">
-                Manage shared expenses effortlessly with Splitly in three simple
-                steps.
-              </Text>
-            </Stack>
+          <SimpleGrid
+            columns={{ base: 1, md: 3 }}
+            gap="12"
+            justifyItems="center">
+            {[
+              {
+                step: "01",
+                title: "Create a Group",
+                desc: "Invite your friends or team members instantly.",
+              },
+              {
+                step: "02",
+                title: "Log Expenses",
+                desc: "Snap a receipt or enter costs as they happen.",
+              },
+              {
+                step: "03",
+                title: "Settle Up",
+                desc: "One-click calculations to see final balances.",
+              },
+            ].map((item) => (
+              <Stack
+                key={item.step}
+                gap="4"
+                w="full"
+                maxW="320px"
+                textAlign={{ base: "center", md: "left" }}>
+                <Text
+                  fontFamily="mono"
+                  color="accent.secondary"
+                  fontWeight="bold">
+                  {item.step}
+                </Text>
 
-            <SimpleGrid
-              columns={{ base: 1, md: 3 }}
-              gap="10">
-              {[
-                {
-                  title: "Create a Group",
-                  desc: "Start a group with friends, roommates, or teammates.",
-                  icon: FaUsers,
-                },
-                {
-                  title: "Add Expenses",
-                  desc: "Record shared costs and choose who paid.",
-                  icon: FaReceipt,
-                },
-                {
-                  title: "Settle Balances",
-                  desc: "See who owes what and settle instantly.",
-                  icon: FaBalanceScale,
-                },
-              ].map((step) => (
                 <Box
-                  key={step.title}
-                  p="10"
-                  borderRadius="2xl"
-                  bg="rgba(15,23,42,0.65)"
-                  border="1px solid"
-                  borderColor="whiteAlpha.200"
-                  backdropFilter="blur(16px)"
-                  textAlign="center"
-                  transition="all .25s ease"
-                  _hover={{
-                    transform: "translateY(-6px)",
-                    borderColor: "teal.300",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
-                  }}>
-                  {/* Step number badge */}
-                  <Box
-                    w="42px"
-                    h="42px"
-                    mx="auto"
-                    mb="5"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    borderRadius="lg"
-                    bgGradient="linear(to-r, teal.400, cyan.400)"
-                    color="black"
-                    fontWeight="bold"></Box>
+                  h="1px"
+                  w="full"
+                  bg="border.default"
+                />
 
-                  {/* Icon */}
-                  <Box mb="4">
-                    <Icon
-                      as={step.icon}
-                      boxSize="7"
-                      color="teal.300"
-                    />
-                  </Box>
+                <Text
+                  fontWeight="700"
+                  fontSize="xl"
+                  color="text.primary">
+                  {item.title}
+                </Text>
 
-                  {/* Title */}
-                  <Text
-                    fontWeight="bold"
-                    color="white"
-                    fontSize="lg">
-                    {step.title}
-                  </Text>
-
-                  {/* Description */}
-                  <Text
-                    mt="2"
-                    color="gray.400"
-                    fontSize="sm">
-                    {step.desc}
-                  </Text>
-                </Box>
-              ))}
-            </SimpleGrid>
-          </Stack>
+                <Text color="text.muted">{item.desc}</Text>
+              </Stack>
+            ))}
+          </SimpleGrid>
         </Container>
 
-        {/* CTA */}
+        {/* FINAL CTA */}
         <Container
           maxW="5xl"
-          py="28">
-          <Box
-            textAlign="center"
-            p={{ base: "10", md: "16" }}
-            borderRadius="2xl"
-            bg="rgba(15,23,42,0.75)"
+          py="32">
+          <Flex
+            direction="column"
+            align="center"
+            justify="center"
+            p={{ base: "12", md: "20" }}
+            bg="bg.secondary"
             border="1px solid"
-            borderColor="whiteAlpha.200"
-            backdropFilter="blur(16px)"
-            position="relative"
-            overflow="hidden"
-            transition="all .25s"
-            _hover={{
-              borderColor: "teal.300",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
-            }}>
-            {/* subtle gradient glow */}
-            <Box
-              position="absolute"
-              top="-40%"
-              left="-20%"
-              w="140%"
-              h="200%"
-              bgGradient="radial(teal.500 0%, transparent 70%)"
-              opacity="0.08"
-              pointerEvents="none"
-            />
+            borderColor="border.default"
+            rounded="3xl"
+            textAlign="center"
+            backdropFilter="blur(12px)">
+            <Heading
+              mb="6"
+              letterSpacing="-0.02em"
+              color="text.primary">
+              Ready to simplify your life?
+            </Heading>
 
-            <Stack gap="6">
-              <Heading
-                color="white"
-                fontSize={{ base: "2xl", md: "3xl" }}>
-                Start Managing Shared Expenses Today
-              </Heading>
+            <Text
+              color="text.secondary"
+              mb="10"
+              maxW="md">
+              Join thousands of users managing expenses without the stress.
+            </Text>
 
-              <Text
-                color="gray.400"
-                maxW="420px"
-                mx="auto">
-                Create a group, add expenses, and settle balances with your
-                friends in seconds.
-              </Text>
-
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                justify="center"
-                gap="4"
-                pt="4">
-                <Button
-                  variant="outline"
-                  borderColor="teal.500"
-                  color="teal.400"
-                  size="lg"
-                  px="8"
-                  _hover={{
-                    bg: "rgba(20,184,166,0.1)",
-                    borderColor: "teal.400",
-                    boxShadow: "0 0 12px rgba(20,184,166,0.35)",
-                  }}
-                  onClick={() => navigate("/signup")}>
-                  Sign Up
-                </Button>
-
-                <Button
-                  variant="outline"
-                  borderColor="blue.500"
-                  color="blue.400"
-                  size="lg"
-                  px="8"
-                  _hover={{
-                    bg: "rgba(59,130,246,0.1)",
-                    borderColor: "blue.400",
-                    boxShadow: "0 0 12px rgba(59,130,246,0.35)",
-                  }}
-                  onClick={() => navigate("/login")}>
-                  Login
-                </Button>
-              </Stack>
-            </Stack>
-          </Box>
+            <Button
+              bg="accent.primary"
+              color="white"
+              size="lg"
+              rounded="full"
+              px="12"
+              transition="all 0.2s"
+              _hover={{
+                transform: "scale(1.05)",
+                opacity: 0.9,
+              }}
+              onClick={() => navigate("/signup")}>
+              Get Splitly Free
+            </Button>
+          </Flex>
         </Container>
       </Box>
     </AppPageLayout>

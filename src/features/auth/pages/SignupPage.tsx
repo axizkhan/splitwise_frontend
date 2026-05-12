@@ -1,21 +1,20 @@
 import {
   Box,
   Heading,
-  Field,
   Input,
   Button,
   Text,
   VStack,
   HStack,
   Image,
+  InputGroup,
+  IconButton,
 } from "@chakra-ui/react";
-import { RiArrowRightLine } from "react-icons/ri";
+import { RiArrowRightLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { useState } from "react";
 import { useSignup } from "@/features/auth/hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { useToast } from "@/shared/toastService";
-import { InputGroup, IconButton } from "@chakra-ui/react";
-import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -26,6 +25,7 @@ function Signup() {
     mobileNumber: "",
     upiId: "",
   });
+
   const [emailSent, setEmailSent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,20 +37,15 @@ function Signup() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    mutate(formData as any, {
+    mutate(formData, {
       onSuccess: () => {
         setEmailSent(true);
-        toast.success(
-          "Verification Email Sent",
-          "Please check your email to verify your account.",
-        );
+        toast.success("Verification Email Sent", "Check your email.");
       },
-      onError: (error: any) => {
-        const errorMessage =
-          error?.message || "Signup failed. Please try again.";
-        toast.error("Signup Failed", errorMessage);
+      onError: (error) => {
+        toast.error("Signup Failed", error?.message || "Try again.");
       },
     });
   };
@@ -59,45 +54,100 @@ function Signup() {
     return (
       <Box
         minH="100vh"
-        bg="bg.primary"
         display="flex"
         alignItems="center"
         justifyContent="center"
-        px={4}>
+        bg="bg.primary"
+        px={4}
+        position="relative"
+        overflow="hidden">
+        {/* Glow */}
+        <Box
+          position="absolute"
+          top="-120px"
+          left="-120px"
+          w="320px"
+          h="320px"
+          bg="accent.primary"
+          filter="blur(140px)"
+          opacity="0.12"
+        />
+
+        {/* Card */}
         <VStack
-          maxW="420px"
-          width="100%"
+          position="relative"
+          zIndex={1}
           bg="bg.secondary"
-          p={8}
-          borderRadius="xl"
+          backdropFilter="blur(20px)"
+          p={{ base: 8, md: 10 }}
+          rounded="2xl"
           border="1px solid"
-          borderColor="slate.700"
+          borderColor="border.default"
+          boxShadow="0 20px 50px rgba(0,0,0,0.45)"
+          gap={6}
           textAlign="center"
-          gap={4}>
-          <Heading
-            size="lg"
-            color="text.primary">
-            Check Your Email 📩
-          </Heading>
+          maxW="420px"
+          w="full">
+          {/* Icon */}
+          <Box
+            p={4}
+            rounded="full"
+            bg="rgba(59,130,246,0.1)"
+            border="1px solid"
+            borderColor="rgba(59,130,246,0.2)">
+            <Text fontSize="3xl">📩</Text>
+          </Box>
 
-          <Text color="text.muted">We sent a verification link to:</Text>
+          {/* Heading */}
+          <VStack gap={2}>
+            <Heading
+              color="text.primary"
+              fontWeight="800"
+              letterSpacing="-0.03em">
+              Check your email
+            </Heading>
 
-          <Text
-            fontWeight="bold"
-            color="teal.400">
-            {formData.email}
-          </Text>
+            <Text
+              color="text.muted"
+              fontSize="sm">
+              We've sent a verification link to
+            </Text>
 
-          <Text color="text.muted">
-            Click the link in your email to activate your account.
-          </Text>
+            <Text
+              color="accent.primary"
+              fontWeight="600"
+              fontSize="sm">
+              {formData.email}
+            </Text>
+          </VStack>
 
-          <Button
-            mt={4}
-            onClick={() => (window.location.href = "https://mail.google.com")}
-            colorScheme="teal">
+          {/* Action */}
+          <Box
+            as="a"
+            ref="https://mail.google.com"
+            // target="_blank"
+            rel="noopener noreferrer"
+            display="inline-flex"
+            alignItems="center"
+            justifyContent="center"
+            bg="accent.primary"
+            color="white"
+            w="full"
+            fontWeight="600"
+            borderRadius="md"
+            height="44px"
+            fontSize="sm"
+            transition="all 0.2s"
+            _hover={{
+              opacity: 0.92,
+              transform: "translateY(-1px)",
+              textDecoration: "none",
+            }}
+            _active={{
+              transform: "scale(0.98)",
+            }}>
             Open Gmail
-          </Button>
+          </Box>
         </VStack>
       </Box>
     );
@@ -110,354 +160,245 @@ function Signup() {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      py={8}
-      px={4}>
-      {/* Main Container */}
-      <VStack
-        width="100%"
-        maxW="480px"
-        gap={8}>
-        {/* Header Section */}
-        <VStack
-          gap={6}
-          width="100%">
-          {/* Logo and App Name */}
-          <VStack gap={3}>
-            <Box
-              bg="linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)"
-              p={4}
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="slate.700">
-              <Image
-                src="/image.png"
-                alt="Splitly Logo"
-                height="64px"
-                width="64px"
-                objectFit="contain"
-              />
-            </Box>
-            <VStack gap={1}>
-              <Heading
-                size="2xl"
-                color="text.primary"
-                fontWeight="800"
-                textAlign="center">
-                Splitly
-              </Heading>
-              <Text
-                color="text.secondary"
-                fontSize="sm"
-                textAlign="center">
-                Manage shared expenses effortlessly
-              </Text>
-            </VStack>
-          </VStack>
+      position="relative"
+      px={4}
+      overflow="hidden">
+      {/* Glow */}
+      <Box
+        position="absolute"
+        top="-120px"
+        left="-120px"
+        w="350px"
+        h="350px"
+        bg="accent.primary"
+        filter="blur(140px)"
+        opacity="0.12"
+      />
 
-          {/* Signup Heading */}
-          <VStack
-            gap={2}
-            width="100%">
-            <Heading
-              size="lg"
-              color="text.primary"
-              textAlign="center">
-              Create Account
-            </Heading>
-            <Text
-              color="text.muted"
-              fontSize="sm"
-              textAlign="center">
-              Join thousands splitting expenses smartly
-            </Text>
-          </VStack>
+      <VStack
+        maxW="520px"
+        w="full"
+        gap={8}
+        position="relative"
+        zIndex="1">
+        {/* Header */}
+        <VStack
+          gap={3}
+          textAlign="center">
+          <Box
+            // bg="bg.secondary"
+            p={4}
+            rounded="2xl"
+            // border="1px solid"
+            // borderColor="border.default"
+            // boxShadow="0 10px 40px rgba(0,0,0,0.25)"
+          >
+            <Image
+              src="/logo.svg"
+              h="80px"
+            />
+          </Box>
+
+          <Heading
+            color="text.primary"
+            fontWeight="800"
+            letterSpacing="-0.03em">
+            Splitly
+          </Heading>
+
+          <Text
+            color="text.muted"
+            fontSize="sm">
+            Smart expense splitting made simple
+          </Text>
         </VStack>
 
-        {/* Form Section */}
-
+        {/* Form Card */}
         <Box
-          as="form"
-          onSubmit={handleSubmit}
-          width="100%"
-          display="flex"
-          flexDirection="column"
-          gap={4}>
-          {/* Name Fields Row */}
-          <HStack
-            gap={4}
-            width="100%">
-            {/* First Name */}
-            <Field.Root
-              required
-              width="100%">
-              <Field.Label
-                color="text.primary"
-                fontSize="sm"
-                fontWeight="600"
-                mb={2}>
-                First Name
-              </Field.Label>
+          w="full"
+          p={8}
+          // bg="bg.secondary"
+          // backdropFilter="blur(20px)"
+          // // rounded="2xl"
+          // // border="1px solid"
+          // // borderColor="border.default"
+          // boxShadow="0 10px 40px rgba(0,0,0,0.4)"
+        >
+          <Box
+            as="form"
+            onSubmit={handleSubmit}
+            display="flex"
+            flexDirection="column"
+            gap={5}>
+            <HStack gap={4}>
               <Input
                 name="firstName"
-                placeholder="John"
-                value={formData.firstName}
+                placeholder="First name"
                 onChange={handleChange}
                 bg="bg.secondary"
-                borderColor="slate.700"
-                px={2}
+                borderColor="border.default"
                 color="text.primary"
-                _placeholder={{ color: "text.muted" }}
-                _focus={{
-                  borderColor: "teal.500",
-                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-                }}
-                _hover={{
-                  borderColor: "slate.600",
-                }}
+                px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
-            </Field.Root>
 
-            {/* Last Name */}
-            <Field.Root
-              required
-              width="100%">
-              <Field.Label
-                color="text.primary"
-                fontSize="sm"
-                fontWeight="600"
-                mb={2}>
-                Last Name
-              </Field.Label>
               <Input
                 name="lastName"
-                placeholder="Doe"
-                value={formData.lastName}
+                placeholder="Last name"
                 onChange={handleChange}
                 bg="bg.secondary"
-                px={2}
-                borderColor="slate.700"
+                borderColor="border.default"
                 color="text.primary"
-                _placeholder={{ color: "text.muted" }}
-                _focus={{
-                  borderColor: "teal.500",
-                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-                }}
-                _hover={{
-                  borderColor: "slate.600",
-                }}
+                px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
-            </Field.Root>
-          </HStack>
+            </HStack>
 
-          {/* Email Field */}
-          <Field.Root required>
-            <Field.Label
-              color="text.primary"
-              fontSize="sm"
-              fontWeight="600"
-              mb={2}>
-              Email Address
-            </Field.Label>
             <Input
               name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formData.email}
+              placeholder="Email"
               onChange={handleChange}
               bg="bg.secondary"
-              px={2}
-              borderColor="slate.700"
+              borderColor="border.default"
               color="text.primary"
-              _placeholder={{ color: "text.muted" }}
-              _focus={{
-                borderColor: "teal.500",
-                boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-              }}
-              _hover={{
-                borderColor: "slate.600",
-              }}
+              px={2}
               height="44px"
               fontSize="sm"
+              _placeholder={{
+                color: "text.muted",
+              }}
+              _focusVisible={{
+                borderColor: "accent.primary",
+                boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+              }}
             />
-            <Field.HelperText
-              color="text.muted"
-              fontSize="xs"
-              mt={1}>
-              We'll never share your email.
-            </Field.HelperText>
-          </Field.Root>
 
-          {/* Password Field */}
-          <Field.Root required>
-            <Field.Label
-              color="text.primary"
-              fontSize="sm"
-              fontWeight="600"
-              mb={2}>
-              Password
-            </Field.Label>
             <InputGroup
               endElement={
                 <IconButton
-                  size="sm"
                   variant="ghost"
-                  aria-label="toggle password"
-                  color="gray.400"
-                  _hover={{ color: "gray.200", bg: "transparent" }}
+                  color="text.secondary"
+                  _hover={{
+                    bg: "transparent",
+                    color: "text.primary",
+                  }}
                   onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
                 </IconButton>
               }>
               <Input
-                name="password"
                 type={showPassword ? "text" : "password"}
-                px={2}
-                placeholder="Create a strong password"
-                value={formData.password}
+                name="password"
+                placeholder="Password"
                 onChange={handleChange}
                 bg="bg.secondary"
-                borderColor="slate.700"
+                borderColor="border.default"
                 color="text.primary"
-                _placeholder={{ color: "text.muted" }}
-                _focus={{
-                  borderColor: "teal.500",
-                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-                }}
-                _hover={{
-                  borderColor: "slate.600",
-                }}
+                px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
             </InputGroup>
-          </Field.Root>
 
-          {/* Optional Fields */}
-          <HStack
-            gap={4}
-            width="100%">
-            {/* Mobile Number */}
-            <Field.Root width="100%">
-              <Field.Label
-                color="text.primary"
-                fontSize="sm"
-                fontWeight="600"
-                mb={2}>
-                Mobile Number
-              </Field.Label>
+            <HStack gap={4}>
               <Input
                 name="mobileNumber"
-                placeholder="9999999999"
-                value={formData.mobileNumber}
-                px={2}
+                placeholder="Mobile"
                 onChange={handleChange}
                 bg="bg.secondary"
-                borderColor="slate.700"
+                borderColor="border.default"
                 color="text.primary"
-                _placeholder={{ color: "text.muted" }}
-                _focus={{
-                  borderColor: "teal.500",
-                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-                }}
-                _hover={{
-                  borderColor: "slate.600",
-                }}
+                px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
-            </Field.Root>
 
-            {/* UPI ID */}
-            <Field.Root width="100%">
-              <Field.Label
-                color="text.primary"
-                fontSize="sm"
-                fontWeight="600"
-                mb={2}>
-                UPI ID
-              </Field.Label>
               <Input
                 name="upiId"
-                placeholder="user@upi"
-                value={formData.upiId}
+                placeholder="UPI ID"
                 onChange={handleChange}
                 bg="bg.secondary"
-                borderColor="slate.700"
-                px={2}
+                borderColor="border.default"
                 color="text.primary"
-                _placeholder={{ color: "text.muted" }}
-                _focus={{
-                  borderColor: "teal.500",
-                  boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)",
-                }}
-                _hover={{
-                  borderColor: "slate.600",
-                }}
+                px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
-            </Field.Root>
-          </HStack>
+            </HStack>
 
-          {/* Sign Up Button */}
-          <Button
-            type="submit"
-            width="100%"
-            bg="teal.500"
-            color="white"
-            height="44px"
-            fontSize="sm"
-            fontWeight="600"
-            disabled={isPending}
-            mt={2}
-            _hover={{
-              bg: "teal.600",
-            }}
-            _active={{
-              bg: "teal.700",
-            }}
-            transition="all 0.2s"
-            gap={2}>
-            {isPending ? "Creating Account..." : "Sign Up"}
-            <RiArrowRightLine />
-          </Button>
+            <Button
+              type="submit"
+              bg="accent.primary"
+              color="white"
+              h="50px"
+              fontWeight="bold"
+              transition="all 0.2s"
+              _hover={{
+                transform: "translateY(-2px)",
+                opacity: 0.92,
+                boxShadow: "0 8px 30px rgba(59,130,246,0.4)",
+              }}
+              _active={{
+                transform: "scale(0.97)",
+              }}>
+              {isPending ? "Creating..." : "Create Account"}
+              <RiArrowRightLine />
+            </Button>
+          </Box>
         </Box>
 
-        {/* Footer Section */}
-        <VStack
-          gap={4}
-          width="100%">
-          <Box
-            width="100%"
-            height="1px"
-            bg="linear-gradient(90deg, transparent, slate.700, transparent)"
-          />
-          <HStack
-            gap={1}
-            justify="center"
-            flexWrap="wrap"
-            width="100%">
+        {/* Footer */}
+        <HStack>
+          <Text color="text.muted">Already have an account?</Text>
+
+          <RouterLink to="/login">
             <Text
-              color="text.muted"
-              fontSize="sm">
-              Already have an account?
+              color="accent.primary"
+              fontWeight="bold"
+              _hover={{
+                textDecoration: "underline",
+              }}>
+              Login
             </Text>
-            <RouterLink to="/login">
-              <Text
-                as="span"
-                color="teal.400"
-                fontWeight="600"
-                cursor="pointer"
-                _hover={{ color: "teal.300", textDecoration: "underline" }}>
-                Log in
-              </Text>
-            </RouterLink>
-          </HStack>
-        </VStack>
+          </RouterLink>
+        </HStack>
       </VStack>
     </Box>
   );

@@ -80,19 +80,19 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
 
   return (
     <Card.Root
-      bg="linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)"
+      bg="bg.secondary"
       borderRadius="2xl"
       border="1px solid"
-      borderColor="slate.700"
-      boxShadow="0 4px 12px rgba(0, 0, 0, 0.3)"
-      _hover={{
-        boxShadow: "0 8px 20px rgba(34, 197, 94, 0.2)",
-        transform: "translateY(-6px)",
-        borderColor: "green.500",
-        zIndex: 2,
-      }}
+      borderColor="border.default"
+      boxShadow="0 4px 12px rgba(0,0,0,0.3)"
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-      cursor="pointer">
+      cursor="pointer"
+      _hover={{
+        boxShadow: "0 8px 20px rgba(59,130,246,0.15)",
+        transform: "translateY(-6px)",
+        borderColor: "accent.primary",
+        zIndex: 2,
+      }}>
       <Card.Body p={{ base: 5, md: 6 }}>
         <HStack
           justify="space-between"
@@ -103,7 +103,7 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
             flex={1}>
             <Heading
               size="md"
-              color="slate.100"
+              color="text.primary"
               fontWeight="700">
               {expense.title}
             </Heading>
@@ -116,13 +116,13 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                 <Box
                   px={2}
                   py={1}
-                  bg="rgba(34, 197, 94, 0.1)"
+                  bg="rgba(52,211,153,0.1)"
                   borderRadius="lg"
                   border="1px solid"
-                  borderColor="rgba(34, 197, 94, 0.3)">
+                  borderColor="rgba(52,211,153,0.2)">
                   <Text
                     fontSize="xs"
-                    color="green.300"
+                    color="status.success"
                     fontWeight="600">
                     Paid by{" "}
                     {typeof expense.paidBy === "object"
@@ -130,9 +130,10 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                       : expense.paidBy}
                   </Text>
                 </Box>
+
                 <Text
                   fontSize="xs"
-                  color="slate.500">
+                  color="text.muted">
                   {createdDate}
                 </Text>
               </HStack>
@@ -140,7 +141,7 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
               {expense.description && (
                 <Text
                   fontSize="sm"
-                  color="slate.400"
+                  color="text.secondary"
                   lineHeight="1.5">
                   {expense.description}
                 </Text>
@@ -151,43 +152,45 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
           <VStack
             align="end"
             gap={3}>
+            {/* Amount */}
             <Box
-              bg="linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)"
+              bg="rgba(52,211,153,0.08)"
               px={4}
               py={3}
               borderRadius="xl"
               border="1px solid"
-              borderColor="rgba(34, 197, 94, 0.3)">
+              borderColor="rgba(52,211,153,0.2)">
               <HStack gap={1}>
                 <Icon
-                  color="green.300"
+                  color="status.success"
                   boxSize={5}>
                   <MdOutlineCurrencyRupee />
                 </Icon>
+
                 <Heading
                   size="md"
-                  color="green.300"
+                  color="status.success"
                   fontWeight="800">
                   {expense.amount}
                 </Heading>
               </HStack>
             </Box>
 
-            {/* Menu with Edit and Delete options */}
+            {/* Menu */}
             <Menu.Root>
               <Menu.Trigger asChild>
                 <IconButton
                   size="sm"
                   variant="ghost"
-                  color="slate.400"
+                  color="text.muted"
+                  transition="all 0.2s ease"
                   _hover={{
-                    bg: "whiteAlpha.100",
-                    color: "white",
+                    bg: "bg.tertiary",
+                    color: "text.primary",
                   }}
                   _active={{
-                    bg: "whiteAlpha.200",
-                  }}
-                  transition="all 0.2s ease">
+                    bg: "bg.secondary",
+                  }}>
                   <BsThreeDotsVertical />
                 </IconButton>
               </Menu.Trigger>
@@ -196,17 +199,14 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                 <Menu.Content
                   minW="180px"
                   p="6px"
-                  bg="rgba(26, 35, 50, 0.95)"
+                  bg="bg.secondary"
                   backdropFilter="blur(12px)"
                   border="1px solid"
-                  borderColor="whiteAlpha.100"
+                  borderColor="border.default"
                   borderRadius="lg"
-                  boxShadow="0 10px 30px rgba(0, 0, 0, 0.45)"
-                  zIndex={1000}
-                  _open={{
-                    animation: "fadeIn 0.15s ease-out",
-                  }}>
-                  {/* EDIT */}
+                  boxShadow="0 10px 30px rgba(0,0,0,0.45)"
+                  zIndex={1000}>
+                  {/* Edit */}
                   <Menu.Item
                     value="edit"
                     borderRadius="md"
@@ -214,20 +214,17 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                     py="2"
                     fontSize="sm"
                     fontWeight="500"
-                    color="slate.200"
-                    _hover={{
-                      bg: "whiteAlpha.100",
-                      color: "white",
-                    }}
-                    _active={{
-                      bg: "whiteAlpha.200",
-                    }}
+                    color="text.secondary"
                     transition="all 0.15s ease"
+                    _hover={{
+                      bg: "bg.tertiary",
+                      color: "text.primary",
+                    }}
                     onClick={() => setIsEditOpen(true)}>
                     Edit Expense
                   </Menu.Item>
 
-                  {/* DELETE */}
+                  {/* Delete */}
                   <Menu.Item
                     value="delete"
                     mt="4px"
@@ -236,15 +233,11 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                     py="2"
                     fontSize="sm"
                     fontWeight="500"
-                    color="red.400"
-                    _hover={{
-                      bg: "rgba(239, 68, 68, 0.15)",
-                      color: "red.300",
-                    }}
-                    _active={{
-                      bg: "rgba(239, 68, 68, 0.25)",
-                    }}
+                    color="status.error"
                     transition="all 0.15s ease"
+                    _hover={{
+                      bg: "rgba(248,113,113,0.12)",
+                    }}
                     onClick={() => setIsDeleteOpen(true)}>
                     Delete Expense
                   </Menu.Item>
@@ -255,14 +248,13 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
         </HStack>
       </Card.Body>
 
-      {/* Edit Expense Dialog */}
+      {/* EDIT DIALOG */}
       <Dialog.Root
         size={{ base: "lg", md: "md" }}
         placement="center"
         open={isEditOpen}
         onOpenChange={(e) => setIsEditOpen(e.open)}>
         <Portal>
-          {/* Backdrop */}
           <Dialog.Backdrop
             zIndex={1400}
             backdropFilter="blur(6px)"
@@ -272,12 +264,11 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
           <Dialog.Positioner zIndex={1400}>
             <Dialog.Content
               p={{ base: 5, md: 7 }}
-              bg="linear-gradient(180deg, #0f172a 0%, #111827 100%)"
+              bg="bg.secondary"
               border="1px solid"
-              borderColor="whiteAlpha.200"
-              borderRadius="xl"
+              borderColor="border.default"
+              borderRadius="2xl"
               boxShadow="0 20px 60px rgba(0,0,0,0.65)">
-              {/* HEADER */}
               <Dialog.Header mb={4}>
                 <VStack
                   align="start"
@@ -285,29 +276,28 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                   <Dialog.Title
                     fontSize="xl"
                     fontWeight="700"
-                    color="white">
+                    color="text.primary">
                     Edit Expense
                   </Dialog.Title>
+
                   <Text
                     fontSize="sm"
-                    color="gray.400">
+                    color="text.muted">
                     Update the expense amount
                   </Text>
                 </VStack>
               </Dialog.Header>
 
-              {/* BODY */}
               <Dialog.Body pb={6}>
-                {/* Amount Card */}
                 <Box
-                  bg="whiteAlpha.50"
+                  bg="bg.tertiary"
                   border="1px solid"
-                  borderColor="whiteAlpha.200"
+                  borderColor="border.subtle"
                   borderRadius="lg"
                   p={4}>
                   <Field.Root required>
                     <Field.Label
-                      color="gray.300"
+                      color="text.secondary"
                       fontWeight="500"
                       mb={2}>
                       Expense Amount
@@ -321,42 +311,43 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                       step="0.01"
                       min="0"
                       size="lg"
-                      bg="whiteAlpha.50"
-                      borderColor="whiteAlpha.300"
-                      color="white"
+                      bg="bg.secondary"
+                      borderColor="border.default"
+                      color="text.primary"
                       _hover={{
-                        borderColor: "whiteAlpha.400",
+                        borderColor: "border.subtle",
                       }}
-                      _focus={{
-                        borderColor: "green.400",
-                        boxShadow: "0 0 0 2px rgba(34,197,94,0.4)",
+                      _focusVisible={{
+                        borderColor: "accent.primary",
+                        boxShadow:
+                          "0 0 0 1px var(--chakra-colors-accent-primary)",
                       }}
-                      _placeholder={{ color: "gray.500" }}
+                      _placeholder={{
+                        color: "text.muted",
+                      }}
                     />
                   </Field.Root>
                 </Box>
               </Dialog.Body>
 
-              {/* FOOTER */}
               <Dialog.Footer
                 borderTop="1px solid"
-                borderColor="whiteAlpha.200"
+                borderColor="border.default"
                 pt={4}
                 gap={3}>
                 <Button
                   variant="ghost"
                   onClick={() => setIsEditOpen(false)}
-                  color="gray.300"
+                  color="text.secondary"
                   _hover={{
-                    bg: "whiteAlpha.100",
-                    color: "white",
+                    bg: "bg.tertiary",
+                    color: "text.primary",
                   }}>
                   Cancel
                 </Button>
 
                 <Button
-                  bg="green.600"
-                  _hover={{ bg: "green.500" }}
+                  bg="accent.primary"
                   color="white"
                   fontWeight="600"
                   onClick={handleEditSubmit}
@@ -367,159 +358,13 @@ function ExpenseCardComponent({ expense }: ExpenseCardProps) {
                 </Button>
               </Dialog.Footer>
 
-              {/* Close Button */}
               <Dialog.CloseTrigger asChild>
                 <CloseButton
                   size="sm"
-                  color="gray.400"
-                  _hover={{ color: "white" }}
-                />
-              </Dialog.CloseTrigger>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </Portal>
-      </Dialog.Root>
-
-      {/* Delete Confirmation Dialog */}
-      <Dialog.Root
-        size={{ base: "lg", md: "md" }}
-        placement="center"
-        open={isDeleteOpen}
-        onOpenChange={(e) => setIsDeleteOpen(e.open)}>
-        <Portal>
-          {/* Backdrop */}
-          <Dialog.Backdrop
-            zIndex={1400}
-            backdropFilter="blur(6px)"
-            bg="blackAlpha.600"
-          />
-
-          <Dialog.Positioner zIndex={1400}>
-            <Dialog.Content
-              p={{ base: 5, md: 7 }}
-              bg="linear-gradient(180deg, #0f172a 0%, #111827 100%)"
-              border="1px solid"
-              borderColor="whiteAlpha.200"
-              borderRadius="xl"
-              boxShadow="0 20px 60px rgba(0,0,0,0.65)">
-              {/* HEADER */}
-              <Dialog.Header mb={4}>
-                <Dialog.Title
-                  fontSize="xl"
-                  fontWeight="700"
-                  color="red.400">
-                  Delete Expense
-                </Dialog.Title>
-              </Dialog.Header>
-
-              {/* BODY */}
-              <Dialog.Body pb={6}>
-                {/* Warning Card */}
-                <Box
-                  bg="red.900/25"
-                  border="1px solid"
-                  borderColor="red.500/40"
-                  borderRadius="lg"
-                  p={4}
-                  mb={6}>
-                  <Text
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="red.300"
-                    mb={1}>
-                    This action cannot be undone
-                  </Text>
-
-                  <Text
-                    fontSize="sm"
-                    color="gray.300">
-                    Are you sure you want to permanently delete this expense?
-                  </Text>
-                </Box>
-
-                {/* Expense Info Card */}
-                <Box
-                  bg="whiteAlpha.50"
-                  border="1px solid"
-                  borderColor="whiteAlpha.200"
-                  borderRadius="lg"
-                  p={4}>
-                  <VStack
-                    align="start"
-                    gap={3}>
-                    <Box>
-                      <Text
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        letterSpacing="0.5px"
-                        color="gray.500"
-                        mb={1}>
-                        Expense
-                      </Text>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="600"
-                        color="white">
-                        {expense.title}
-                      </Text>
-                    </Box>
-
-                    <Box>
-                      <Text
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        letterSpacing="0.5px"
-                        color="gray.500"
-                        mb={1}>
-                        Amount
-                      </Text>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="700"
-                        color="white">
-                        ₹{expense.amount}
-                      </Text>
-                    </Box>
-                  </VStack>
-                </Box>
-              </Dialog.Body>
-
-              {/* FOOTER */}
-              <Dialog.Footer
-                borderTop="1px solid"
-                borderColor="whiteAlpha.200"
-                pt={4}
-                gap={3}>
-                <Button
-                  variant="ghost"
-                  onClick={() => setIsDeleteOpen(false)}
-                  color="gray.300"
+                  color="text.muted"
                   _hover={{
-                    bg: "whiteAlpha.100",
-                    color: "white",
-                  }}>
-                  Cancel
-                </Button>
-
-                <Button
-                  bg="red.600"
-                  _hover={{ bg: "red.500" }}
-                  color="white"
-                  fontWeight="600"
-                  onClick={handleDeleteConfirm}
-                  loading={isDeletePending}
-                  loadingText="Deleting..."
-                  px={{ mdDown: 1, md: 3 }}>
-                  Delete Expense
-                </Button>
-              </Dialog.Footer>
-
-              {/* Close Icon */}
-              <Dialog.CloseTrigger asChild>
-                <CloseButton
-                  size="sm"
-                  color="gray.400"
-                  _hover={{ color: "white" }}
+                    color: "text.primary",
+                  }}
                 />
               </Dialog.CloseTrigger>
             </Dialog.Content>

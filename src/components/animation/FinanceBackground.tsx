@@ -39,8 +39,14 @@ export default function FinanceBackground() {
           left={`${Math.random() * 100}%`}
           boxSize="28px"
           color="yellow.300"
-          opacity={0.15}
-          animation={`${fallAnimation} ${6 + Math.random() * 6}s linear infinite`}
+          opacity={0.35}
+          filter="
+        brightness(1.8)
+        drop-shadow(0 0 16px rgba(251,191,36,0.9))
+      "
+          animation={`${fallAnimation} ${
+            6 + Math.random() * 6
+          }s linear infinite`}
           animationDelay={`${Math.random() * 6}s`}
         />
       ))}
@@ -54,9 +60,15 @@ export default function FinanceBackground() {
           top="-60px"
           left={`${Math.random() * 100}%`}
           boxSize="40px"
-          color="teal.400"
-          opacity={0.12}
-          animation={`${fallAnimation} ${10 + Math.random() * 6}s linear infinite`}
+          color="blue.300"
+          opacity={0.28}
+          filter="
+        brightness(1.7)
+        drop-shadow(0 0 18px rgba(96,165,250,0.8))
+      "
+          animation={`${fallAnimation} ${
+            10 + Math.random() * 6
+          }s linear infinite`}
           animationDelay={`${Math.random() * 6}s`}
         />
       ))}

@@ -66,16 +66,18 @@ function LoginPage() {
           width="100%">
           <VStack gap={3}>
             <Box
-              bg="linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.1))"
+              // bg="bg.secondary"
               p={4}
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="slate.700">
+              // borderRadius="2xl"
+              // border="1px solid"
+              // borderColor="border.default"
+              // boxShadow="0 10px 40px rgba(0,0,0,0.25)"
+            >
               <Image
-                src="/image.png"
+                src="/logo.svg"
                 alt="Splitly Logo"
-                height="64px"
-                width="64px"
+                height="80px"
+                width="80px"
                 objectFit="contain"
               />
             </Box>
@@ -123,7 +125,11 @@ function LoginPage() {
           gap={5}>
           {/* Email */}
           <Field.Root required>
-            <Field.Label fontWeight="600">Email Address</Field.Label>
+            <Field.Label
+              fontWeight="600"
+              color="text.primary">
+              Email Address
+            </Field.Label>
 
             <Input
               placeholder="you@example.com"
@@ -131,20 +137,34 @@ function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               bg="bg.secondary"
-              borderColor="slate.700"
+              borderColor="border.default"
+              color="text.primary"
               px={2}
               height="44px"
               fontSize="sm"
+              _placeholder={{
+                color: "text.muted",
+              }}
+              _focusVisible={{
+                borderColor: "accent.primary",
+                boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+              }}
             />
 
-            <Field.HelperText fontSize="xs">
+            <Field.HelperText
+              fontSize="xs"
+              color="text.muted">
               We'll never share your email.
             </Field.HelperText>
           </Field.Root>
 
           {/* Password */}
           <Field.Root required>
-            <Field.Label fontWeight="600">Password</Field.Label>
+            <Field.Label
+              fontWeight="600"
+              color="text.primary">
+              Password
+            </Field.Label>
 
             <InputGroup
               endElement={
@@ -152,8 +172,11 @@ function LoginPage() {
                   size="sm"
                   variant="ghost"
                   aria-label="toggle password"
-                  color="gray.400"
-                  _hover={{ color: "gray.200", bg: "transparent" }}
+                  color="text.muted"
+                  _hover={{
+                    color: "text.secondary",
+                    bg: "transparent",
+                  }}
                   onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}
                 </IconButton>
@@ -164,10 +187,18 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 bg="bg.secondary"
-                borderColor="slate.700"
+                borderColor="border.default"
+                color="text.primary"
                 px={2}
                 height="44px"
                 fontSize="sm"
+                _placeholder={{
+                  color: "text.muted",
+                }}
+                _focusVisible={{
+                  borderColor: "accent.primary",
+                  boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
+                }}
               />
             </InputGroup>
           </Field.Root>
@@ -176,13 +207,21 @@ function LoginPage() {
           <Button
             type="submit"
             width="100%"
-            bg="teal.500"
+            bg="accent.primary"
             color="white"
             height="44px"
             fontSize="sm"
             fontWeight="600"
             disabled={isPending}
-            gap={2}>
+            gap={2}
+            transition="all 0.2s"
+            _hover={{
+              opacity: 0.9,
+              transform: "translateY(-1px)",
+            }}
+            _active={{
+              transform: "scale(0.98)",
+            }}>
             {isPending ? "Logging in..." : "Log In"}
             <RiArrowRightLine />
           </Button>
@@ -195,18 +234,24 @@ function LoginPage() {
           <Box
             width="100%"
             height="1px"
-            bg="linear-gradient(90deg, transparent, slate.700, transparent)"
+            bg="border.default"
           />
 
           <HStack gap={1}>
-            <Text fontSize="sm">Don't have an account?</Text>
+            <Text
+              fontSize="sm"
+              color="text.secondary">
+              Don't have an account?
+            </Text>
 
             <RouterLink to="/signup">
               <Text
                 as="span"
-                color="teal.400"
+                color="accent.primary"
                 fontWeight="600"
-                _hover={{ textDecoration: "underline" }}>
+                _hover={{
+                  textDecoration: "underline",
+                }}>
                 Sign up
               </Text>
             </RouterLink>

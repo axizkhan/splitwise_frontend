@@ -36,40 +36,100 @@ function GroupSummaryCard({
     <Box
       key={i}
       p={{ base: 5, md: 6 }}
-      bg={`linear-gradient(135deg, ${colorScheme.dark} 0%, rgba(15, 23, 42, 0.9) 100%)`}
+      bg="bg.secondary"
       borderRadius="2xl"
       border="1px solid"
-      borderColor={colorScheme.border}
+      borderColor="border.default"
       boxShadow="0 4px 12px rgba(0, 0, 0, 0.3)"
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+      position="relative"
+      overflow="hidden"
       _hover={{
         transform: "translateY(-8px)",
-        boxShadow: `0 8px 24px ${colorScheme.border}`,
-        borderColor: colorScheme.text,
+        borderColor:
+          card.color === "green"
+            ? "status.success"
+            : card.color === "red"
+              ? "status.error"
+              : "accent.primary",
+        boxShadow:
+          card.color === "green"
+            ? "0 8px 24px rgba(52,211,153,0.18)"
+            : card.color === "red"
+              ? "0 8px 24px rgba(248,113,113,0.18)"
+              : "0 8px 24px rgba(59,130,246,0.18)",
       }}>
+      {/* Accent Line */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        h="2px"
+        bg={
+          card.color === "green"
+            ? "status.success"
+            : card.color === "red"
+              ? "status.error"
+              : "accent.primary"
+        }
+        opacity="0.9"
+      />
+
       <VStack
         align="start"
         gap={3}
         w="full">
+        {/* Label */}
         <Text
           fontSize="xs"
           fontWeight="700"
-          color="slate.400"
+          color="text.muted"
           textTransform="uppercase"
           letterSpacing="0.5px">
           {card.title}
         </Text>
 
+        {/* Amount */}
         <Heading
           size="xl"
-          color={colorScheme.text}
-          fontWeight="800">
+          color={
+            card.color === "green"
+              ? "status.success"
+              : card.color === "red"
+                ? "status.error"
+                : "text.primary"
+          }
+          fontWeight="800"
+          letterSpacing="-0.03em">
           ₹{card.amount}
         </Heading>
 
+        {/* Badge */}
         {card.badge && (
           <Badge
-            colorPalette={card.color || "green"}
+            bg={
+              card.color === "green"
+                ? "rgba(52,211,153,0.12)"
+                : card.color === "red"
+                  ? "rgba(248,113,113,0.12)"
+                  : "rgba(59,130,246,0.12)"
+            }
+            color={
+              card.color === "green"
+                ? "status.success"
+                : card.color === "red"
+                  ? "status.error"
+                  : "accent.primary"
+            }
+            border="1px solid"
+            borderColor={
+              card.color === "green"
+                ? "rgba(52,211,153,0.2)"
+                : card.color === "red"
+                  ? "rgba(248,113,113,0.2)"
+                  : "rgba(59,130,246,0.2)"
+            }
             fontSize="xs"
             px={2}
             py={1}

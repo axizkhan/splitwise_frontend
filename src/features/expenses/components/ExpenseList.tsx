@@ -31,34 +31,63 @@ function ExpenseList() {
       mx="auto"
       px={{ base: 4, md: 6 }}
       py={{ base: 8, md: 12 }}>
-      {/* header  */}
+      {/* Header */}
       <HStack
         maxWidth="1200px"
         justifyContent="space-between"
+        align="center"
         mb={{ base: 8, md: 10 }}>
-        {/* back button  */}
+        {/* Back Button */}
         <Button
           variant="outline"
+          borderColor="border.subtle"
+          color="text.primary"
+          bg="bg.secondary"
+          transition="all 0.2s"
+          _hover={{
+            bg: "bg.tertiary",
+            borderColor: "accent.primary",
+          }}
           onClick={() => navigate(-1)}>
           <IoArrowBack />
         </Button>
+
+        {/* Title */}
         <VStack
           align="center"
           gap={1}>
-          <Heading>Expenses</Heading>
-          <Text>All Expenses</Text>
+          <Heading
+            color="text.primary"
+            fontWeight="800"
+            letterSpacing="-0.03em">
+            Expenses
+          </Heading>
+
+          <Text
+            color="text.muted"
+            fontSize="sm">
+            All Expenses
+          </Text>
+
           <Badge
-            variant="solid"
-            size={"lg"}>
+            bg="rgba(52,211,153,0.1)"
+            color="status.success"
+            border="1px solid"
+            borderColor="rgba(52,211,153,0.2)"
+            px={3}
+            py={1}
+            rounded="full"
+            fontWeight="700"
+            fontSize="sm">
             ₹{totalAmount}
           </Badge>
         </VStack>
 
-        {/* create new expense  */}
+        {/* Create Expense */}
         <CreateExpenseDialog />
       </HStack>
 
-      {/* main contain  */}
+      {/* Main Content */}
       {isLoading ? (
         <SimpleGrid
           columns={{ base: 1, md: 2 }}
@@ -67,7 +96,9 @@ function ExpenseList() {
             <Skeleton
               key={i}
               height="200px"
-              borderRadius="xl"
+              borderRadius="2xl"
+              // startColor="bg.secondary"
+              // endColor="bg.tertiary"
             />
           ))}
         </SimpleGrid>
@@ -85,12 +116,26 @@ function ExpenseList() {
       ) : (
         <Box
           textAlign="center"
-          py={10}>
-          <Text
-            color="gray.500"
-            fontSize="lg">
-            No expenses yet. Create one to get started!
-          </Text>
+          py={16}
+          px={6}
+          border="1px dashed"
+          borderColor="border.subtle"
+          rounded="2xl"
+          bg="bg.secondary">
+          <VStack gap={3}>
+            <Heading
+              size="md"
+              color="text.primary">
+              No expenses yet
+            </Heading>
+
+            <Text
+              color="text.muted"
+              fontSize="sm"
+              maxW="sm">
+              Create your first expense to start tracking shared group spending.
+            </Text>
+          </VStack>
         </Box>
       )}
     </Box>

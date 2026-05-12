@@ -81,16 +81,22 @@ function PaymentDialog({
       open={isOpen}
       onOpenChange={(e) => setIsOpen(e.open)}>
       <Portal>
-        <Dialog.Backdrop zIndex={1200} />
+        {/* Backdrop */}
+        <Dialog.Backdrop
+          zIndex={1200}
+          bg="blackAlpha.700"
+          backdropFilter="blur(8px)"
+        />
+
         <Dialog.Positioner zIndex={1200}>
           <Dialog.Content
             p={{ base: 5, md: 7 }}
-            bg="linear-gradient(180deg, #0f172a 0%, #111827 100%)"
+            bg="bg.secondary"
             border="1px solid"
-            borderColor="whiteAlpha.200"
-            borderRadius="xl"
+            borderColor="border.default"
+            borderRadius="2xl"
             boxShadow="0 20px 60px rgba(0,0,0,0.6)">
-            {/* HEADER */}
+            {/* Header */}
             <Dialog.Header mb={4}>
               <VStack
                 align="start"
@@ -98,29 +104,32 @@ function PaymentDialog({
                 <Dialog.Title
                   fontSize="xl"
                   fontWeight="700"
-                  color="white">
+                  color="text.primary">
                   Make Payment
                 </Dialog.Title>
+
                 <Text
                   fontSize="sm"
-                  color="gray.400">
+                  color="text.muted">
                   Pay {memberName}
                 </Text>
               </VStack>
             </Dialog.Header>
 
-            {/* BALANCE CARD */}
+            {/* Balance Card */}
             <Box
-              bg={isOwing ? "red.900/30" : "green.900/30"}
+              bg={isOwing ? "rgba(248,113,113,0.1)" : "rgba(52,211,153,0.1)"}
               border="1px solid"
-              borderColor={isOwing ? "red.500/40" : "green.500/40"}
-              borderRadius="lg"
+              borderColor={
+                isOwing ? "rgba(248,113,113,0.2)" : "rgba(52,211,153,0.2)"
+              }
+              borderRadius="xl"
               p={4}
               mb={6}>
               <Text
                 fontWeight="600"
                 fontSize="sm"
-                color="gray.300"
+                color="text.secondary"
                 mb={1}>
                 Current Balance
               </Text>
@@ -128,18 +137,18 @@ function PaymentDialog({
               <Text
                 fontSize="lg"
                 fontWeight="700"
-                color={isOwing ? "red.400" : "green.400"}>
+                color={isOwing ? "status.error" : "status.success"}>
                 {isOwing
                   ? `You owe ₹${balance}`
                   : `You are owed ₹${Math.abs(balance)}`}
               </Text>
             </Box>
 
-            {/* BODY */}
+            {/* Body */}
             <Dialog.Body pb={6}>
               <Field.Root required>
                 <Field.Label
-                  color="gray.300"
+                  color="text.secondary"
                   fontWeight="500">
                   Amount <Field.RequiredIndicator />
                 </Field.Label>
@@ -153,38 +162,47 @@ function PaymentDialog({
                   min="0"
                   size="lg"
                   px={2}
-                  bg="whiteAlpha.50"
-                  borderColor="whiteAlpha.300"
-                  color="white"
+                  bg="bg.tertiary"
+                  borderColor="border.subtle"
+                  color="text.primary"
                   _hover={{
-                    borderColor: "whiteAlpha.400",
+                    borderColor: "border.default",
                   }}
-                  _focus={{
-                    borderColor: "teal.400",
-                    boxShadow: "0 0 0 2px rgba(20,184,166,0.4)",
+                  _focusVisible={{
+                    borderColor: "accent.primary",
+                    boxShadow: "0 0 0 1px var(--chakra-colors-accent-primary)",
                   }}
-                  _placeholder={{ color: "gray.500" }}
+                  _placeholder={{
+                    color: "text.muted",
+                  }}
                 />
               </Field.Root>
             </Dialog.Body>
 
-            {/* FOOTER */}
+            {/* Footer */}
             <Dialog.Footer
               borderTop="1px solid"
-              borderColor="whiteAlpha.200"
+              borderColor="border.default"
               pt={4}
               gap={3}>
               <Button
                 variant="ghost"
                 onClick={() => setIsOpen(false)}
-                color="gray.300"
-                _hover={{ bg: "whiteAlpha.100", color: "white" }}>
+                color="text.secondary"
+                _hover={{
+                  bg: "bg.tertiary",
+                  color: "text.primary",
+                }}>
                 Cancel
               </Button>
 
               <Button
-                bg="teal.500"
-                _hover={{ bg: "teal.400" }}
+                bg="accent.primary"
+                _hover={{
+                  opacity: 0.92,
+                  transform: "translateY(-1px)",
+                }}
+                transition="all 0.2s"
                 px={{ mdDown: 2, md: 4 }}
                 color="white"
                 fontWeight="600"
@@ -195,13 +213,17 @@ function PaymentDialog({
               </Button>
             </Dialog.Footer>
 
+            {/* Close */}
             <Dialog.CloseTrigger asChild>
               <CloseButton
                 size="sm"
-                color="gray.400"
+                color="text.muted"
                 px={2}
                 py={4}
-                _hover={{ color: "white" }}
+                _hover={{
+                  color: "text.primary",
+                  bg: "bg.tertiary",
+                }}
               />
             </Dialog.CloseTrigger>
           </Dialog.Content>

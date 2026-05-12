@@ -5,80 +5,81 @@ import {
   Stack,
   Text,
   Link,
-  Icon,
+  IconButton,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { FaGithub, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaXTwitter } from "react-icons/fa6"; // Updated to X icon
 import AppBranding from "../common/AppBranding";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
+
+  const handleNav = (path: string) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(path);
+  };
+
   return (
     <Box
+      as="footer"
       borderTop="1px solid"
-      borderColor="whiteAlpha.200"
-      bg="rgba(15,23,42,0.9)"
-      backdropFilter="blur(14px)"
+      borderColor="border.default"
+      bg="bg.primary"
       mt="20"
       w="100%">
       <Container
         maxW="1200px"
         mx="auto"
-        px={{ base: 6, md: 8 }}
-        py="12">
+        px="6"
+        py="16">
         {/* Top Section */}
         <SimpleGrid
-          columns={{ base: 1, sm: 2, md: 3 }}
+          columns={{ base: 1, sm: 2, md: 4 }}
           gap="12"
           alignItems="start">
           {/* Brand */}
-          <Stack gap="4">
-            <Flex
-              align="center"
-              gap="3">
-              <AppBranding />
-            </Flex>
+          <Stack
+            gap="6"
+            gridColumn={{ md: "span 2" }}>
+            <AppBranding />
 
             <Text
-              color="gray.400"
+              color="text.muted"
               fontSize="sm"
-              maxW="280px"
-              lineHeight="1.6">
-              Effortless expense sharing for friends, roommates, and teams.
+              maxW="320px"
+              lineHeight="tall">
+              Building the future of shared financial clarity. Effortless
+              expense sharing for modern teams and roommates.
             </Text>
           </Stack>
 
           {/* Navigation */}
           <Stack gap="4">
             <Text
-              fontWeight="semibold"
-              color="white"
-              fontSize="sm"
-              letterSpacing="wide"
+              fontWeight="700"
+              color="text.primary"
+              fontSize="xs"
+              letterSpacing="widest"
               textTransform="uppercase">
-              Navigation
+              Platform
             </Text>
 
             {[
-              { label: "Groups", path: "/dashboard" },
-              { label: "Login", path: "/login" },
-              { label: "Sign Up", path: "/signup" },
+              { label: "Dashboard", path: "/dashboard" },
+              { label: "Sign In", path: "/login" },
+              { label: "Create Account", path: "/signup" },
             ].map((item) => (
               <Link
                 key={item.label}
-                color="gray.400"
+                color="text.muted"
                 fontSize="sm"
-                cursor="pointer"
-                transition="all 0.2s ease"
+                variant="plain"
                 _hover={{
-                  color: "teal.300",
-                  transform: "translateX(4px)",
+                  color: "text.primary",
+                  textDecoration: "none",
                 }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  navigate(item.path);
-                }}>
+                onClick={() => handleNav(item.path)}>
                 {item.label}
               </Link>
             ))}
@@ -87,89 +88,94 @@ const Footer = () => {
           {/* Social */}
           <Stack gap="4">
             <Text
-              fontWeight="semibold"
-              color="white"
-              fontSize="sm"
-              letterSpacing="wide"
+              fontWeight="700"
+              color="text.primary"
+              fontSize="xs"
+              letterSpacing="widest"
               textTransform="uppercase">
-              Connect
+              Social
             </Text>
 
-            <Flex gap="4">
-              <Link
-                href="https://github.com"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                w="38px"
-                h="38px"
-                rounded="full"
-                bg="whiteAlpha.100"
-                transition="all 0.25s ease"
+            <Flex gap="3">
+              <IconButton
+                asChild
+                aria-label="GitHub"
+                variant="ghost"
+                size="sm"
+                rounded="md"
+                color="text.muted"
                 _hover={{
-                  bg: "teal.500",
-                  transform: "translateY(-3px)",
+                  bg: "bg.secondary",
+                  color: "text.primary",
                 }}>
-                <Icon
-                  as={FaGithub}
-                  boxSize="4"
-                />
-              </Link>
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <FaGithub size={18} />
+                </a>
+              </IconButton>
 
-              <Link
-                href="https://twitter.com"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                w="38px"
-                h="38px"
-                rounded="full"
-                bg="whiteAlpha.100"
-                transition="all 0.25s ease"
+              <IconButton
+                asChild
+                aria-label="Twitter"
+                variant="ghost"
+                size="sm"
+                rounded="md"
+                color="text.muted"
                 _hover={{
-                  bg: "teal.500",
-                  transform: "translateY(-3px)",
+                  bg: "bg.secondary",
+                  color: "text.primary",
                 }}>
-                <Icon
-                  as={FaTwitter}
-                  boxSize="4"
-                />
-              </Link>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <FaXTwitter size={18} />
+                </a>
+              </IconButton>
             </Flex>
           </Stack>
         </SimpleGrid>
 
         {/* Bottom */}
         <Flex
-          mt="12"
-          pt="6"
+          mt="16"
+          pt="8"
           borderTop="1px solid"
-          borderColor="whiteAlpha.200"
+          borderColor="border.subtle"
           justify="space-between"
           align="center"
           flexDir={{ base: "column", md: "row" }}
-          gap="4">
+          gap="6">
           <Text
-            fontSize="sm"
-            color="gray.500">
-            © {new Date().getFullYear()} Splitly. All rights reserved.
+            fontSize="xs"
+            fontFamily="mono"
+            color="text.muted">
+            © {new Date().getFullYear()} Splitly Labs.
           </Text>
 
-          <Flex gap="6">
+          <Flex gap="8">
             <Link
-              color="gray.500"
-              fontSize="sm"
-              transition="color 0.2s ease"
-              _hover={{ color: "teal.300" }}>
-              Privacy
+              href="#"
+              color="text.muted"
+              fontSize="xs"
+              _hover={{
+                color: "text.primary",
+                textDecoration: "none",
+              }}>
+              Privacy Policy
             </Link>
 
             <Link
-              color="gray.500"
-              fontSize="sm"
-              transition="color 0.2s ease"
-              _hover={{ color: "teal.300" }}>
-              Terms
+              href="#"
+              color="text.muted"
+              fontSize="xs"
+              _hover={{
+                color: "text.primary",
+                textDecoration: "none",
+              }}>
+              Terms of Service
             </Link>
           </Flex>
         </Flex>

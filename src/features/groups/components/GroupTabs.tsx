@@ -10,8 +10,8 @@ export default function GroupTabs({
   return (
     <HStack
       gap={0}
-      borderBottomWidth="2px"
-      borderBottomColor="slate.700"
+      borderBottomWidth="1px"
+      borderBottomColor="border.default"
       mb={8}>
       <Button
         variant="ghost"
@@ -21,16 +21,20 @@ export default function GroupTabs({
         py={3}
         borderBottomWidth={activeTab === "members" ? "3px" : "0px"}
         borderBottomColor={
-          activeTab === "members" ? "green.500" : "transparent"
+          activeTab === "members" ? "accent.primary" : "transparent"
         }
         borderRadius="0"
-        color={activeTab === "members" ? "green.300" : "slate.400"}
+        color={activeTab === "members" ? "text.primary" : "text.muted"}
         fontWeight={activeTab === "members" ? "700" : "500"}
         fontSize="lg"
         transition="all 0.2s"
-        _hover={{ color: "green.300" }}>
+        _hover={{
+          color: "text.primary",
+          bg: "transparent",
+        }}>
         Members
       </Button>
+
       <Button
         variant="ghost"
         size="lg"
@@ -39,14 +43,17 @@ export default function GroupTabs({
         py={3}
         borderBottomWidth={activeTab === "expenses" ? "3px" : "0px"}
         borderBottomColor={
-          activeTab === "expenses" ? "green.500" : "transparent"
+          activeTab === "expenses" ? "accent.primary" : "transparent"
         }
         borderRadius="0"
-        color={activeTab === "expenses" ? "green.300" : "slate.400"}
+        color={activeTab === "expenses" ? "text.primary" : "text.muted"}
         fontWeight={activeTab === "expenses" ? "700" : "500"}
         fontSize="lg"
         transition="all 0.2s"
-        _hover={{ color: "green.300" }}>
+        _hover={{
+          color: "text.primary",
+          bg: "transparent",
+        }}>
         Expenses
       </Button>
     </HStack>

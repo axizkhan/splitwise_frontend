@@ -4,48 +4,96 @@ export const darkTheme = createSystem(defaultConfig, {
   theme: {
     tokens: {
       colors: {
-        slate: {
-          50: { value: "#f8fafc" },
-          100: { value: "#f1f5f9" },
-          200: { value: "#e2e8f0" },
-          300: { value: "#cbd5e1" },
-          400: { value: "#94a3b8" },
-          500: { value: "#64748b" },
-          600: { value: "#475569" },
-          700: { value: "#334155" },
-          800: { value: "#1e293b" },
-          900: { value: "#0f172a" },
+        gray: {
+          50: { value: "#fafafa" },
+          100: { value: "#f4f4f5" },
+          200: { value: "#e4e4e7" },
+          300: { value: "#d4d4d8" },
+          400: { value: "#a1a1aa" },
+          500: { value: "#71717a" },
+          600: { value: "#52525b" },
+          700: { value: "#3f3f46" },
+          800: { value: "#27272a" },
+          900: { value: "#18181b" },
+          950: { value: "#09090b" },
         },
-        vibrant: {
-          blue: { value: "#3b82f6" },
-          purple: { value: "#a78bfa" },
-          pink: { value: "#f472b6" },
-          green: { value: "#34d399" },
-          orange: { value: "#fb923c" },
-          cyan: { value: "#22d3ee" },
+
+        accent: {
+          blue: { value: "#0070f3" },
+          purple: { value: "#8b5cf6" },
+          green: { value: "#10b981" },
+          orange: { value: "#f59e0b" },
+          red: { value: "#ef4444" },
         },
       },
     },
 
     semanticTokens: {
       colors: {
-        "bg.primary": { value: "#0f172a" },
-        "bg.secondary": { value: "#1e293b" },
-        "bg.tertiary": { value: "#334155" },
+        /* Backgrounds */
+        "bg.primary": {
+          value: "#000000",
+        },
 
-        "text.primary": { value: "#f1f5f9" },
-        "text.secondary": { value: "#cbd5e1" },
-        "text.muted": { value: "#94a3b8" },
+        "bg.secondary": {
+          value: "#111111",
+        },
 
-        "accent.primary": { value: "#3b82f6" },
-        "accent.secondary": { value: "#a78bfa" },
+        "bg.tertiary": {
+          value: "#1a1a1a",
+        },
 
-        "status.success": { value: "#34d399" },
-        "status.warning": { value: "#fb923c" },
-        "status.error": { value: "#f87171" },
+        "bg.elevated": {
+          value: "#18181b",
+        },
 
-        "border.default": { value: "#334155" },
-        "border.subtle": { value: "#475569" },
+        /* Text */
+        "text.primary": {
+          value: "#fafafa",
+        },
+
+        "text.secondary": {
+          value: "#a1a1aa",
+        },
+
+        "text.muted": {
+          value: "#71717a",
+        },
+
+        /* Accent */
+        "accent.primary": {
+          value: "#0070f3",
+        },
+
+        "accent.secondary": {
+          value: "#8b5cf6",
+        },
+
+        /* Status */
+        "status.success": {
+          value: "#10b981",
+        },
+
+        "status.warning": {
+          value: "#f59e0b",
+        },
+
+        "status.error": {
+          value: "#ef4444",
+        },
+
+        /* Borders */
+        "border.default": {
+          value: "#27272a",
+        },
+
+        "border.subtle": {
+          value: "#1f1f22",
+        },
+
+        "border.strong": {
+          value: "#3f3f46",
+        },
       },
     },
 
@@ -55,24 +103,31 @@ export const darkTheme = createSystem(defaultConfig, {
 
         base: {
           root: {
-            backdropFilter: "blur(16px)",
-            bg: "rgba(15, 23, 42, 0.75)",
+            backdropFilter: "blur(20px)",
+            bg: "rgba(17,17,17,0.92)",
             border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "14px",
-            boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+            borderRadius: "16px",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.45)",
             px: "16px",
-            py: "12px",
-            color: "white",
+            py: "14px",
+            color: "#fafafa",
           },
 
           title: {
             fontWeight: "600",
             fontSize: "14px",
+            color: "#fafafa",
+            letterSpacing: "-0.01em",
           },
 
           description: {
             fontSize: "13px",
-            color: "#cbd5e1",
+            color: "#a1a1aa",
+            lineHeight: "1.5",
+          },
+
+          closeTrigger: {
+            color: "#71717a",
           },
         },
       },

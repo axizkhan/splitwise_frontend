@@ -24,17 +24,23 @@ export default function ExpensesTabContent({
     <Box>
       <HStack
         justify="space-between"
+        align="center"
         mb={6}>
         <VStack
           align="start"
           gap={2}>
           <Heading
             size="md"
-            color="slate.100">
+            color="text.primary"
+            fontWeight="700">
             Group Expenses
           </Heading>
+
           <Badge
-            colorPalette="green"
+            bg="rgba(52,211,153,0.1)"
+            color="status.success"
+            border="1px solid"
+            borderColor="rgba(52,211,153,0.2)"
             fontSize="sm"
             px={3}
             py={1}
@@ -43,8 +49,10 @@ export default function ExpensesTabContent({
             Total: ₹{totalExpenseAmount}
           </Badge>
         </VStack>
+
         <CreateExpenseDialog />
       </HStack>
+
       {expenseLoading ? (
         <SimpleGrid
           columns={{ base: 1, md: 2 }}
@@ -53,7 +61,7 @@ export default function ExpensesTabContent({
             <Skeleton
               key={i}
               height="200px"
-              borderRadius="xl"
+              borderRadius="2xl"
             />
           ))}
         </SimpleGrid>
@@ -71,16 +79,28 @@ export default function ExpensesTabContent({
       ) : (
         <Box
           textAlign="center"
-          py={10}
-          bg="linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%)"
+          py={12}
+          px={6}
+          bg="bg.secondary"
           borderRadius="2xl"
           border="1px dashed"
-          borderColor="slate.700">
-          <Text
-            color="slate.400"
-            fontSize="lg">
-            ✨ No expenses yet. Create one to get started!
-          </Text>
+          borderColor="border.subtle">
+          <VStack gap={3}>
+            <Text fontSize="2xl">✨</Text>
+
+            <Heading
+              size="sm"
+              color="text.primary">
+              No expenses yet
+            </Heading>
+
+            <Text
+              color="text.muted"
+              fontSize="sm"
+              maxW="sm">
+              Create your first expense to start tracking shared group spending.
+            </Text>
+          </VStack>
         </Box>
       )}
     </Box>

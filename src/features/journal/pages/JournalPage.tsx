@@ -112,62 +112,69 @@ function Journel() {
         align="stretch"
         gap={8}>
         {/* Back Button */}
-
         <Button
           variant="outline"
           size="sm"
           onClick={() => navigate(`/group/${groupId}`)}
-          borderColor="slate.700"
-          color="slate.300"
-          _hover={{ bg: "slate.800" }}
+          borderColor="border.subtle"
+          color="text.secondary"
+          bg="bg.secondary"
+          _hover={{
+            bg: "bg.tertiary",
+            borderColor: "accent.primary",
+            color: "text.primary",
+          }}
           gap={2}
           w="fit-content">
           <IoArrowBack />
         </Button>
 
         {/* Between Users */}
-
         <HStack gap={2}>
           <Text
-            color="slate.400"
+            color="text.muted"
             fontSize="sm">
             Between
           </Text>
 
           <Badge
-            colorPalette="green"
+            bg="rgba(52,211,153,0.12)"
+            color="status.success"
+            border="1px solid"
+            borderColor="rgba(52,211,153,0.2)"
             px={2}>
             You
           </Badge>
 
-          <Text color="slate.500">and</Text>
+          <Text color="text.muted">and</Text>
 
           <Badge
-            colorPalette="blue"
+            bg="rgba(59,130,246,0.12)"
+            color="accent.primary"
+            border="1px solid"
+            borderColor="rgba(59,130,246,0.2)"
             px={2}>
             {fullMemberName}
           </Badge>
         </HStack>
 
         {/* Header */}
-
         <Stack
           direction={{ base: "column", lg: "row" }}
           justify="space-between"
           align={{ base: "flex-start", lg: "center" }}
           gap={6}>
           {/* User */}
-
           <HStack gap={4}>
             <Box
               p={3}
-              bg="linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.1))"
+              bg="rgba(59,130,246,0.1)"
               borderRadius="xl"
               border="1px solid"
-              borderColor="rgba(34,197,94,0.3)">
+              borderColor="rgba(59,130,246,0.2)">
               <Icon
                 boxSize={8}
-                color="green.400">
+                color="accent.primary">
                 <FaUser />
               </Icon>
             </Box>
@@ -177,34 +184,36 @@ function Journel() {
               gap={0}>
               <Heading
                 size="lg"
-                color="slate.100">
+                color="text.primary"
+                fontWeight="800">
                 {fullMemberName}
               </Heading>
 
               <Text
                 fontSize="sm"
-                color="slate.400">
+                color="text.muted">
                 Transaction history with {fullMemberName}
               </Text>
             </VStack>
           </HStack>
 
-          {/* Cards */}
-
+          {/* Summary Cards */}
           <HStack gap={4}>
-            {/* Balance Card */}
-
+            {/* Balance */}
             <Card.Root
-              bg="rgba(30,41,59,0.6)"
+              bg="bg.secondary"
               border="1px solid"
-              borderColor="slate.700"
+              borderColor="border.default"
               px={6}
-              py={4}>
+              py={4}
+              boxShadow="0 4px 12px rgba(0,0,0,0.2)">
               <Card.Body>
                 <Text
                   fontSize="xs"
-                  color="slate.400"
-                  textTransform="uppercase">
+                  color="text.muted"
+                  textTransform="uppercase"
+                  fontWeight="700"
+                  letterSpacing="0.06em">
                   Balance
                 </Text>
 
@@ -217,33 +226,34 @@ function Journel() {
 
                 <Text
                   fontSize="sm"
-                  color="slate.400">
+                  color="text.secondary">
                   {balanceText}
                 </Text>
               </Card.Body>
             </Card.Root>
 
-            {/* Transactions Card */}
-
+            {/* Transactions */}
             <Card.Root
-              bg="linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.05))"
+              bg="bg.secondary"
               border="1px solid"
-              borderColor="rgba(34,197,94,0.3)"
+              borderColor="border.default"
               px={6}
-              py={4}>
+              py={4}
+              boxShadow="0 4px 12px rgba(0,0,0,0.2)">
               <Card.Body>
                 <Text
                   fontSize="xs"
                   fontWeight="700"
-                  color="slate.400"
-                  textTransform="uppercase">
+                  color="text.muted"
+                  textTransform="uppercase"
+                  letterSpacing="0.06em">
                   Transactions
                 </Text>
 
                 <Heading
                   size="md"
                   mt={2}
-                  color="green.300">
+                  color="accent.primary">
                   {totalEntries}
                 </Heading>
               </Card.Body>
@@ -252,20 +262,19 @@ function Journel() {
         </Stack>
 
         {/* Main Layout */}
-
         <SimpleGrid
           columns={{ base: 1, lg: 3 }}
           gap={8}
           alignItems="start">
           {/* Transactions */}
-
           <VStack
             align="stretch"
             gap={6}
             gridColumn={{ lg: "span 2" }}>
             <Heading
               size="md"
-              color="slate.100">
+              color="text.primary"
+              fontWeight="700">
               Transaction History
             </Heading>
 
@@ -275,7 +284,7 @@ function Journel() {
                   <Skeleton
                     key={i}
                     height="100px"
-                    borderRadius="xl"
+                    borderRadius="2xl"
                   />
                 ))}
               </VStack>
@@ -295,11 +304,11 @@ function Journel() {
                 {journalData.totalEntryCount > 10 && (
                   <Button
                     variant="outline"
-                    borderColor="green.500"
-                    color="green.400"
+                    borderColor="accent.primary"
+                    color="accent.primary"
                     _hover={{
-                      bg: "rgba(34,197,94,0.1)",
-                      borderColor: "green.400",
+                      bg: "rgba(59,130,246,0.1)",
+                      borderColor: "accent.primary",
                     }}
                     onClick={() => setPageNumber(pageNumber + 1)}>
                     Load More Transactions
@@ -309,42 +318,43 @@ function Journel() {
             ) : (
               <Card.Root
                 border="1px dashed"
-                borderColor="slate.700">
+                borderColor="border.subtle"
+                bg="bg.secondary">
                 <Card.Body
                   textAlign="center"
                   py={8}>
-                  <Text color="slate.400">No transactions yet</Text>
+                  <Text color="text.muted">No transactions yet</Text>
                 </Card.Body>
               </Card.Root>
             )}
           </VStack>
 
           {/* Sidebar */}
-
           <VStack
             align="stretch"
             gap={4}
             p={6}
             border="1px solid"
-            borderColor="slate.700"
-            borderRadius="xl"
-            bg="rgba(30,41,59,0.5)"
+            borderColor="border.default"
+            borderRadius="2xl"
+            bg="bg.secondary"
             alignSelf="start"
             position="sticky"
-            top="100px">
+            top="100px"
+            boxShadow="0 4px 12px rgba(0,0,0,0.2)">
             <Heading
               size="md"
-              color="slate.100">
+              color="text.primary">
               Quick Actions
             </Heading>
 
             <Button
               variant="outline"
-              borderColor="green.500"
-              color="green.400"
+              borderColor="accent.primary"
+              color="accent.primary"
               _hover={{
-                bg: "rgba(34,197,94,0.1)",
-                borderColor: "green.400",
+                bg: "rgba(59,130,246,0.1)",
+                borderColor: "accent.primary",
               }}
               onClick={() => setIsPaymentOpen(true)}>
               Make Payment
@@ -352,11 +362,10 @@ function Journel() {
 
             <Button
               variant="outline"
-              borderColor="yellow.500"
-              color="yellow.400"
+              borderColor="status.warning"
+              color="status.warning"
               _hover={{
-                bg: "rgba(250,204,21,0.1)",
-                borderColor: "yellow.400",
+                bg: "rgba(251,146,60,0.1)",
               }}
               loading={isPending}
               onClick={onReminderAlert}

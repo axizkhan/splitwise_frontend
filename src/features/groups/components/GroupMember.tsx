@@ -94,24 +94,47 @@ function GroupMember() {
         gap={4}
         mb={8}>
         <HStack gap={3}>
+          {/* Back Button */}
           <Button
             variant="outline"
             size="sm"
+            borderColor="border.subtle"
+            color="text.primary"
+            bg="bg.secondary"
+            transition="all 0.2s"
+            _hover={{
+              bg: "bg.tertiary",
+              borderColor: "accent.primary",
+            }}
             onClick={() => navigate("/dashboard")}>
             <IoArrowBack />
           </Button>
+
+          {/* Title */}
           <VStack
             align="start"
             gap={1}>
-            <Heading size="lg">{groupDetails.group?.name}</Heading>
-            <Text color="gray.400">Financial Ledger</Text>
+            <Heading
+              size="lg"
+              color="text.primary"
+              fontWeight="800"
+              letterSpacing="-0.03em">
+              {groupDetails.group?.name}
+            </Heading>
+
+            <Text
+              color="text.muted"
+              fontSize="sm">
+              Financial Ledger
+            </Text>
           </VStack>
         </HStack>
 
+        {/* Add Member */}
         <AddMemberDialog groupId={groupId || ""} />
       </Stack>
 
-      {/* INFO CARDS */}
+      {/* Summary Cards */}
       <SimpleGrid
         columns={{ base: 1, sm: 2, lg: 3 }}
         gap={6}
@@ -125,11 +148,13 @@ function GroupMember() {
         ))}
       </SimpleGrid>
 
-      {/* MEMBER CARDS */}
+      {/* Ledger Section */}
       <Box>
         <Heading
           size="md"
-          mb={6}>
+          mb={6}
+          color="text.primary"
+          fontWeight="700">
           Ledger Details
         </Heading>
 
@@ -138,16 +163,25 @@ function GroupMember() {
             columns={{ base: 1, md: 2 }}
             gap={6}>
             {groupDetails.balances.map((balance: any, i: number) => (
-              <Box key={i}>
+              <Box
+                key={i}
+                transition="all 0.2s"
+                _hover={{
+                  transform: "translateY(-2px)",
+                }}>
                 <GroupMemberCard
                   i={i}
                   member={{
                     name: balance.memberName,
                     amount: `₹${balance.amount}`,
                     status: balance.type === "owe" ? "They Owe You" : "You Owe",
-                    color: balance.type === "owe" ? "teal" : "red",
+                    color:
+                      balance.type === "owe"
+                        ? "status.success"
+                        : "status.error",
                   }}
                 />
+
                 {balance.amount > 0 && (
                   <PaymentDialog
                     memberId={balance.memberId}
@@ -160,7 +194,19 @@ function GroupMember() {
             ))}
           </SimpleGrid>
         ) : (
-          <Text color="gray.500">No balance details available</Text>
+          <Box
+            py={12}
+            textAlign="center"
+            border="1px dashed"
+            borderColor="border.subtle"
+            rounded="2xl"
+            bg="bg.secondary">
+            <Text
+              color="text.muted"
+              fontSize="sm">
+              No balance details available
+            </Text>
+          </Box>
         )}
       </Box>
     </Box>

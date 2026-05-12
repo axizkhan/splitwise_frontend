@@ -4,18 +4,21 @@ export default function GroupHeader({ groupName }: { groupName: string }) {
   return (
     <HStack
       gap={3}
-      mb={5}>
+      mb={5}
+      align="center">
       <VStack
         align="start"
         gap={1}>
         <Heading
           size="lg"
-          color="slate.100"
-          fontWeight="800">
+          color="text.primary"
+          fontWeight="800"
+          letterSpacing="-0.03em">
           {groupName}
         </Heading>
+
         <Text
-          color="slate.400"
+          color="text.muted"
           fontSize="sm">
           Financial Details
         </Text>

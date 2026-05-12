@@ -32,31 +32,33 @@ function GroupCardComponents({ group }: GroupCardProps) {
   return (
     <Card.Root
       role="group"
-      bg="rgba(15, 23, 42, 0.75)"
+      bg="bg.secondary"
       backdropFilter="blur(16px)"
       borderRadius="2xl"
       border="1px solid"
-      borderColor="whiteAlpha.100"
+      borderColor="border.default"
       boxShadow="0 8px 30px rgba(0, 0, 0, 0.35)"
       overflow="hidden"
       position="relative"
       transition="all 0.25s ease"
       _hover={{
         transform: "translateY(-6px)",
-        borderColor: "green.400",
-        boxShadow: "0 12px 40px rgba(34, 197, 94, 0.25)",
+        borderColor: "accent.primary",
+        boxShadow: "0 12px 40px rgba(59,130,246,0.2)",
       }}>
-      {/* Subtle top accent glow */}
+      {/* Accent Glow */}
       <Box
         position="absolute"
         top="0"
         left="0"
         right="0"
         height="2px"
-        bg="linear-gradient(90deg, transparent, #22c55e, transparent)"
+        bg="linear-gradient(90deg, transparent, var(--chakra-colors-accent-primary), transparent)"
         opacity="0"
         transition="opacity 0.3s ease"
-        _groupHover={{ opacity: 1 }}
+        _groupHover={{
+          opacity: 1,
+        }}
       />
 
       <Card.Body
@@ -69,13 +71,13 @@ function GroupCardComponents({ group }: GroupCardProps) {
           <Box
             p={3}
             borderRadius="xl"
-            bg="rgba(34,197,94,0.12)"
+            bg="rgba(59,130,246,0.1)"
             border="1px solid"
-            borderColor="rgba(34,197,94,0.25)"
-            color="green.400"
+            borderColor="rgba(59,130,246,0.18)"
+            color="accent.primary"
             transition="all 0.3s ease"
             _groupHover={{
-              bg: "rgba(34,197,94,0.18)",
+              bg: "rgba(59,130,246,0.16)",
               transform: "scale(1.05)",
             }}>
             <Icon
@@ -91,14 +93,14 @@ function GroupCardComponents({ group }: GroupCardProps) {
             <Text
               fontWeight="700"
               fontSize="lg"
-              color="white"
+              color="text.primary"
               letterSpacing="-0.2px">
               {group.name || "Unnamed Group"}
             </Text>
 
             <Text
               fontSize="sm"
-              color="slate.400"
+              color="text.muted"
               lineHeight="1.5">
               {group.description || "No description provided"}
             </Text>
@@ -110,37 +112,39 @@ function GroupCardComponents({ group }: GroupCardProps) {
         px={6}
         py={4}
         borderTop="1px solid"
-        borderColor="whiteAlpha.100"
+        borderColor="border.default"
         display="flex"
         justifyContent="space-between"
         alignItems="center">
+        {/* Meta */}
         <Stack gap={0}>
           <Text
             fontSize="xs"
-            color="slate.300"
+            color="text.secondary"
             fontWeight="500">
             {memberCount} {memberCount === 1 ? "member" : "members"}
           </Text>
+
           <Text
             fontSize="xs"
-            color="slate.500">
+            color="text.muted">
             Created {createdDate}
           </Text>
         </Stack>
 
+        {/* Action */}
         <Button
           size="sm"
-          variant="solid"
-          bg="green.500"
+          bg="accent.primary"
           color="white"
           borderRadius="lg"
           px={4}
           fontWeight="600"
           transition="all 0.2s ease"
           _hover={{
-            bg: "green.400",
+            opacity: 0.92,
             transform: "translateY(-2px)",
-            boxShadow: "0 6px 20px rgba(34,197,94,0.4)",
+            boxShadow: "0 6px 20px rgba(59,130,246,0.35)",
           }}
           _active={{
             transform: "translateY(0)",

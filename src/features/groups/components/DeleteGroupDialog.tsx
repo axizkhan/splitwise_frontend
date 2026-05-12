@@ -63,11 +63,20 @@ export default function DeleteGroupDialog({
       <Dialog.Trigger asChild>
         <Button
           size="sm"
-          colorPalette="red"
+          bg="status.error"
+          color="white"
           variant="solid"
           gap={2}
           mb={4}
-          px={{ mdDown: 2, md: 3 }}>
+          px={{ mdDown: 2, md: 3 }}
+          transition="all 0.2s"
+          _hover={{
+            opacity: 0.92,
+            transform: "translateY(-1px)",
+          }}
+          _active={{
+            transform: "scale(0.98)",
+          }}>
           <MdOutlineDeleteForever />
           Delete Group
         </Button>
@@ -83,10 +92,10 @@ export default function DeleteGroupDialog({
         <Dialog.Positioner>
           <Dialog.Content
             p={{ base: 5, md: 6 }}
-            borderRadius="xl"
-            bg="linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+            borderRadius="2xl"
+            bg="bg.secondary"
             border="1px solid"
-            borderColor="whiteAlpha.200"
+            borderColor="border.default"
             boxShadow="0 25px 50px rgba(0,0,0,0.6)"
             maxW="420px">
             {/* Header */}
@@ -97,13 +106,13 @@ export default function DeleteGroupDialog({
                 <Dialog.Title
                   fontSize="lg"
                   fontWeight="semibold"
-                  color="white">
+                  color="text.primary">
                   Delete Group
                 </Dialog.Title>
 
                 <Text
                   fontSize="sm"
-                  color="gray.400">
+                  color="text.muted">
                   Permanently remove this group
                 </Text>
               </VStack>
@@ -117,37 +126,49 @@ export default function DeleteGroupDialog({
                 textAlign="center">
                 {/* Icon */}
                 <Box
-                  bg="red.900"
+                  bg="rgba(248,113,113,0.12)"
                   p={3}
-                  borderRadius="full">
+                  borderRadius="full"
+                  border="1px solid"
+                  borderColor="rgba(248,113,113,0.2)">
                   <Icon
                     as={MdOutlineDeleteForever}
                     boxSize={7}
-                    color="red.400"
+                    color="status.error"
                   />
                 </Box>
 
                 {/* Message */}
                 <Text
                   fontSize="sm"
-                  color="gray.300">
+                  color="text.secondary"
+                  lineHeight="1.6">
                   Are you sure you want to delete{" "}
                   <Text
                     as="span"
                     fontWeight="bold"
-                    color="white">
+                    color="text.primary">
                     {groupName}
                   </Text>
                   ?
                 </Text>
 
                 {/* Warning */}
-                <Text
-                  fontSize="sm"
-                  color="red.400">
-                  This action cannot be undone. All expenses and payment records
-                  in this group will be permanently deleted.
-                </Text>
+                <Box
+                  bg="rgba(248,113,113,0.08)"
+                  border="1px solid"
+                  borderColor="rgba(248,113,113,0.15)"
+                  rounded="xl"
+                  px={4}
+                  py={3}>
+                  <Text
+                    fontSize="sm"
+                    color="status.error"
+                    lineHeight="1.6">
+                    This action cannot be undone. All expenses and payment
+                    records in this group will be permanently deleted.
+                  </Text>
+                </Box>
               </VStack>
             </Dialog.Body>
 
@@ -160,19 +181,27 @@ export default function DeleteGroupDialog({
                 <Dialog.ActionTrigger asChild>
                   <Button
                     variant="ghost"
-                    color="gray.300"
-                    _hover={{ bg: "whiteAlpha.100" }}>
+                    color="text.secondary"
+                    _hover={{
+                      bg: "bg.tertiary",
+                      color: "text.primary",
+                    }}>
                     Cancel
                   </Button>
                 </Dialog.ActionTrigger>
 
                 <Button
-                  colorPalette="red"
+                  bg="status.error"
+                  color="white"
                   variant="solid"
                   onClick={handleDelete}
                   loading={isPending}
                   loadingText="Deleting..."
-                  px={{ mdDown: 2, md: 3 }}>
+                  px={{ mdDown: 2, md: 3 }}
+                  transition="all 0.2s"
+                  _hover={{
+                    opacity: 0.92,
+                  }}>
                   Delete Group
                 </Button>
               </HStack>
@@ -182,8 +211,11 @@ export default function DeleteGroupDialog({
             <Dialog.CloseTrigger asChild>
               <CloseButton
                 size="sm"
-                color="gray.400"
-                _hover={{ color: "white" }}
+                color="text.muted"
+                _hover={{
+                  color: "text.primary",
+                  bg: "bg.tertiary",
+                }}
               />
             </Dialog.CloseTrigger>
           </Dialog.Content>
