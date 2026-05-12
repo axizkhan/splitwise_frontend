@@ -28,9 +28,9 @@ function GroupSummaryCard({
     },
   };
 
-  const colorScheme = card.color
-    ? colors[card.color as keyof typeof colors]
-    : colors.green;
+  // const colorScheme = card.color
+  //   ? colors[card.color as keyof typeof colors]
+  //   : colors.green;
 
   return (
     <Box
