@@ -28,9 +28,9 @@ function GroupSummaryCard({
     },
   };
 
-  // const colorScheme = card.color
-  //   ? colors[card.color as keyof typeof colors]
-  //   : colors.green;
+  const colorScheme = card.color
+    ? colors[card.color as keyof typeof colors]
+    : colors.green;
 
   return (
     <Box
@@ -93,13 +93,7 @@ function GroupSummaryCard({
         {/* Amount */}
         <Heading
           size="xl"
-          color={
-            card.color === "green"
-              ? "status.success"
-              : card.color === "red"
-                ? "status.error"
-                : "text.primary"
-          }
+          color={colorScheme.text}
           fontWeight="800"
           letterSpacing="-0.03em">
           ₹{card.amount}
